@@ -2,6 +2,23 @@
   "version": "1",
   "addons": [
     {
+      "id": "HardCroeClub",
+      "name": "HardCroeClub BCX",
+      "description": "THIS IS A FORK OF BCX - USE ONLY IF YOU KNOW WHAT YOU”RE DOING I RECOMMEND YOU TO USE OFFICIAL BCX",
+      "author": "rufflan",
+      "repository": "https://github.com/rufflan/HardCroeClub",
+      "tags": ["enhancements", "expansion"],
+      "type": "script",
+      "noCacheBusting": true,
+      "website": "https://rufflan.github.io/HardCroeClub/",
+      "versions": [
+        {
+          "distribution": "stable",
+          "source": "https://rufflan.github.io/HardCroeClub/devel/bcx.js"
+        }
+      ]
+    },
+    {
       "id": "RazorWings",
       "name": "RazorWings (RW)",
       "description": "Razor Wings 提供了一系列类似作弊的功能，用于辅助PR、设计服装等。同时也提供了与IRL玩具的互动。",

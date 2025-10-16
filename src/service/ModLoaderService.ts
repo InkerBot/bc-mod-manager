@@ -107,6 +107,7 @@ export class ModLoaderService {
           break;
       }
       script.async = true;
+      script.crossOrigin = "anonymous";
 
       script.setAttribute('data-mod-id', modId);
       script.setAttribute('data-registry-id', registryId);

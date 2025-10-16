@@ -1,0 +1,474 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>BC Mod Manager - 脚本注入教程</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+      line-height: 1.6;
+      color: #333;
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      min-height: 100vh;
+      padding: 20px;
+    }
+
+    .container {
+      max-width: 900px;
+      margin: 0 auto;
+      background: white;
+      border-radius: 20px;
+      box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+      overflow: hidden;
+    }
+
+    .header {
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      color: white;
+      padding: 40px 30px;
+      text-align: center;
+    }
+
+    .header h1 {
+      font-size: 2.5em;
+      margin-bottom: 10px;
+      text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2);
+    }
+
+    .header p {
+      font-size: 1.1em;
+      opacity: 0.9;
+    }
+
+    .content {
+      padding: 40px 30px;
+    }
+
+    .section {
+      margin-bottom: 40px;
+    }
+
+    .section h2 {
+      color: #667eea;
+      font-size: 1.8em;
+      margin-bottom: 20px;
+      padding-bottom: 10px;
+      border-bottom: 3px solid #667eea;
+    }
+
+    .section h3 {
+      color: #764ba2;
+      font-size: 1.3em;
+      margin: 25px 0 15px 0;
+    }
+
+    .method-card {
+      background: #f8f9fa;
+      border-left: 4px solid #667eea;
+      padding: 20px;
+      margin: 20px 0;
+      border-radius: 8px;
+      transition: transform 0.2s, box-shadow 0.2s;
+    }
+
+    .method-card:hover {
+      transform: translateX(5px);
+      box-shadow: 0 5px 15px rgba(102, 126, 234, 0.2);
+    }
+
+    .platform-badge {
+      display: inline-block;
+      background: #667eea;
+      color: white;
+      padding: 5px 15px;
+      border-radius: 20px;
+      font-size: 0.9em;
+      margin-right: 10px;
+      margin-bottom: 10px;
+    }
+
+    .code-block {
+      background: #2d2d2d;
+      color: #f8f8f2;
+      padding: 20px;
+      border-radius: 8px;
+      overflow-x: auto;
+      margin: 15px 0;
+      position: relative;
+      font-family: "Consolas", "Monaco", "Courier New", monospace;
+      font-size: 0.9em;
+      line-height: 1.5;
+    }
+
+    .code-block code {
+      display: block;
+      white-space: pre-wrap;
+      word-break: break-all;
+    }
+
+    .copy-btn {
+      position: absolute;
+      top: 10px;
+      right: 10px;
+      background: #667eea;
+      color: white;
+      border: none;
+      padding: 8px 15px;
+      border-radius: 5px;
+      cursor: pointer;
+      font-size: 0.85em;
+      transition: background 0.3s;
+    }
+
+    .copy-btn:hover {
+      background: #764ba2;
+    }
+
+    .copy-btn:active {
+      transform: scale(0.95);
+    }
+
+    .step-list {
+      list-style: none;
+      counter-reset: step-counter;
+    }
+
+    .step-list li {
+      counter-increment: step-counter;
+      margin: 20px 0;
+      padding-left: 50px;
+      position: relative;
+    }
+
+    .step-list li::before {
+      content: counter(step-counter);
+      position: absolute;
+      left: 0;
+      top: 0;
+      background: #667eea;
+      color: white;
+      width: 35px;
+      height: 35px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: bold;
+      box-shadow: 0 3px 10px rgba(102, 126, 234, 0.3);
+    }
+
+    .warning {
+      background: #fff3cd;
+      border-left: 4px solid #ffc107;
+      padding: 15px;
+      margin: 20px 0;
+      border-radius: 5px;
+    }
+
+    .warning strong {
+      color: #856404;
+    }
+
+    .info {
+      background: #d1ecf1;
+      border-left: 4px solid #17a2b8;
+      padding: 15px;
+      margin: 20px 0;
+      border-radius: 5px;
+    }
+
+    .info strong {
+      color: #0c5460;
+    }
+
+    .link-button {
+      display: inline-block;
+      background: #667eea;
+      color: white;
+      padding: 12px 30px;
+      text-decoration: none;
+      border-radius: 25px;
+      margin: 10px 10px 10px 0;
+      transition: all 0.3s;
+      box-shadow: 0 4px 15px rgba(102, 126, 234, 0.3);
+    }
+
+    .link-button:hover {
+      background: #764ba2;
+      transform: translateY(-2px);
+      box-shadow: 0 6px 20px rgba(102, 126, 234, 0.4);
+    }
+
+    .footer {
+      background: #f8f9fa;
+      padding: 20px;
+      text-align: center;
+      color: #666;
+      font-size: 0.9em;
+    }
+
+    @media (max-width: 768px) {
+      body {
+        padding: 10px;
+      }
+
+      .header h1 {
+        font-size: 1.8em;
+      }
+
+      .content {
+        padding: 20px 15px;
+      }
+
+      .section h2 {
+        font-size: 1.5em;
+      }
+
+      .code-block {
+        font-size: 0.8em;
+        padding: 15px;
+      }
+
+      .copy-btn {
+        position: static;
+        display: block;
+        width: 100%;
+        margin-top: 10px;
+      }
+    }
+  </style>
+</head>
+<body>
+<div class="container">
+  <div class="header">
+    <h1>🎮 BC Mod Manager</h1>
+    <p>脚本注入教程 - 支持桌面端与移动端</p>
+  </div>
+
+  <div class="content">
+    <!-- 方法一：油猴脚本 -->
+    <div class="section">
+      <h2>📦 方法一：油猴脚本（推荐）</h2>
+      <div class="method-card">
+        <div>
+          <span class="platform-badge">💻 桌面端</span>
+          <span class="platform-badge">🤖 安卓</span>
+        </div>
+        <p>适用于 Chrome、Firefox、Edge、Safari 等浏览器</p>
+      </div>
+
+      <h3>步骤：</h3>
+      <ol class="step-list">
+        <li>
+          <strong>安装油猴扩展</strong>
+          <p>根据你的浏览器选择对应的扩展：</p>
+          <ul style="margin-top: 10px; margin-left: 20px;">
+            <li>Chrome/Edge: <a href="https://chrome.google.com/webstore/detail/tampermonkey/" target="_blank">Tampermonkey</a></li>
+            <li>Firefox: <a href="https://addons.mozilla.org/firefox/addon/tampermonkey/" target="_blank">Tampermonkey</a></li>
+            <li>Safari: <a href="https://apps.apple.com/app/tampermonkey/id1482490089" target="_blank">Tampermonkey</a></li>
+            <li>安卓: 使用 Kiwi Browser 或 Firefox 安装 Tampermonkey</li>
+          </ul>
+        </li>
+        <li>
+          <strong>安装脚本</strong>
+          <p>点击下方按钮直接安装：</p>
+          <a href="https://inkerbot.github.io/bc-mod-manager/bmm.user.js" class="link-button" target="_blank">📥 安装脚本</a>
+        </li>
+        <li>
+          <strong>访问游戏</strong>
+          <p>打开游戏网站，脚本将自动运行</p>
+        </li>
+      </ol>
+    </div>
+
+    <!-- 方法二：书签注入 -->
+    <div class="section">
+      <h2>🔖 方法二：书签注入</h2>
+      <div class="method-card">
+        <div>
+          <span class="platform-badge">📱 iOS</span>
+          <span class="platform-badge">🤖 安卓</span>
+          <span class="platform-badge">💻 桌面端</span>
+        </div>
+        <p>适用于所有平台，无需安装扩展</p>
+      </div>
+
+      <h3>步骤：</h3>
+      <ol class="step-list">
+        <li>
+          <strong>复制注入代码</strong>
+          <p>点击下方按钮复制代码：</p>
+          <div class="code-block">
+            <button class="copy-btn" onclick="copyCode('bookmark-code')">📋 复制</button>
+            <code id="bookmark-code">javascript:(_=>{const script = document.createElement("script");script.src = `https://inkerbot.github.io/bc-mod-manager/main.js`;document.head.appendChild(script);})()</code>
+          </div>
+        </li>
+        <li>
+          <strong>创建书签</strong>
+          <p><strong>iOS Safari:</strong></p>
+          <ul style="margin: 10px 0 10px 20px;">
+            <li>随便收藏一个网页</li>
+            <li>进入书签管理，编辑刚才的书签</li>
+            <li>将书签名称改为 "BC Mod Manager"</li>
+            <li>将书签地址替换为上面复制的代码</li>
+          </ul>
+          <p><strong>安卓/桌面端:</strong></p>
+          <ul style="margin: 10px 0 10px 20px;">
+            <li>添加新书签（任意网址）</li>
+            <li>编辑书签，将地址替换为上面的代码</li>
+          </ul>
+        </li>
+        <li>
+          <strong>使用书签</strong>
+          <p>在游戏页面中，点击刚才创建的书签即可注入脚本</p>
+        </li>
+      </ol>
+
+      <div class="info">
+        <strong>💡 提示：</strong> 每次刷新页面后需要重新点击书签来注入脚本
+      </div>
+    </div>
+
+    <!-- 方法三：控制台注入 -->
+    <div class="section">
+      <h2>⌨️ 方法三：控制台注入</h2>
+      <div class="method-card">
+        <div>
+          <span class="platform-badge">💻 桌面端</span>
+        </div>
+        <p>适用于开发者或临时使用</p>
+      </div>
+
+      <h3>步骤：</h3>
+      <ol class="step-list">
+        <li>
+          <strong>打开开发者工具</strong>
+          <p>按 <code>F12</code> 或 <code>Ctrl+Shift+I</code> (Mac: <code>Cmd+Option+I</code>)</p>
+        </li>
+        <li>
+          <strong>切换到 Console 标签</strong>
+        </li>
+        <li>
+          <strong>粘贴并运行代码</strong>
+          <div class="code-block">
+            <button class="copy-btn" onclick="copyCode('console-code')">📋 复制</button>
+            <code id="console-code">(_=>{
+  const script = document.createElement("script");
+  script.src = "https://inkerbot.github.io/bc-mod-manager/main.js";
+  document.head.appendChild(script);
+})()</code>
+          </div>
+        </li>
+        <li>
+          <strong>按回车执行</strong>
+          <p>脚本将立即加载并运行</p>
+        </li>
+      </ol>
+
+      <div class="warning">
+        <strong>⚠️ 注意：</strong> 每次刷新页面后需要重新执行代码
+      </div>
+    </div>
+
+    <!-- 常见问题 -->
+    <div class="section">
+      <h2>❓ 常见问题</h2>
+
+      <h3>Q: 脚本无法加载？</h3>
+      <p>A: 请检查：</p>
+      <ul style="margin-left: 20px;">
+        <li>网络连接是否正常</li>
+        <li>是否在游戏页面中运行</li>
+        <li>浏览器是否阻止了脚本加载（检查控制台错误信息）</li>
+      </ul>
+
+      <h3>Q: iOS Safari 书签无法使用？</h3>
+      <p>A: 确保：</p>
+      <ul style="margin-left: 20px;">
+        <li>代码以 <code>javascript:</code> 开头</li>
+        <li>代码完整复制，没有遗漏</li>
+        <li>在游戏页面中点击书签，而不是在新标签页</li>
+      </ul>
+
+      <h3>Q: 安卓手机如何使用？</h3>
+      <p>A: 推荐方案：</p>
+      <ul style="margin-left: 20px;">
+        <li><strong>方案1：</strong> 使用 Kiwi Browser + Tampermonkey（最稳定）</li>
+        <li><strong>方案2：</strong> 使用 Firefox + Tampermonkey</li>
+        <li><strong>方案3：</strong> 使用书签注入（任意浏览器）</li>
+      </ul>
+
+      <h3>Q: 脚本安全吗？</h3>
+      <p>A: 本脚本是开源的，你可以在 GitHub 上查看完整源代码。脚本仅在本地运行，不会上传任何数据。</p>
+    </div>
+
+    <!-- 链接 -->
+    <div class="section">
+      <h2>🔗 相关链接</h2>
+      <a href="https://inkerbot.github.io/bc-mod-manager/bmm.user.js" class="link-button" target="_blank">📥 油猴脚本</a>
+      <a href="https://inkerbot.github.io/bc-mod-manager/main.js" class="link-button" target="_blank">📄 主脚本文件</a>
+      <a href="https://github.com/inkerbot/bc-mod-manager" class="link-button" target="_blank">💻 GitHub 仓库</a>
+    </div>
+  </div>
+
+  <div class="footer">
+    <p>BC Mod Manager © 2025 | Made with ❤️</p>
+    <p>如有问题，请在 GitHub 提交 Issue</p>
+  </div>
+</div>
+
+<script>
+  function copyCode(elementId) {
+    const code = document.getElementById(elementId).textContent;
+
+    // 尝试使用现代 API
+    if (navigator.clipboard && navigator.clipboard.writeText) {
+      navigator.clipboard.writeText(code).then(() => {
+        showCopySuccess(elementId);
+      }).catch(() => {
+        fallbackCopy(code, elementId);
+      });
+    } else {
+      fallbackCopy(code, elementId);
+    }
+  }
+
+  function fallbackCopy(text, elementId) {
+    const textarea = document.createElement('textarea');
+    textarea.value = text;
+    textarea.style.position = 'fixed';
+    textarea.style.opacity = '0';
+    document.body.appendChild(textarea);
+    textarea.select();
+
+    try {
+      document.execCommand('copy');
+      showCopySuccess(elementId);
+    } catch (err) {
+      alert('复制失败，请手动复制代码');
+    }
+
+    document.body.removeChild(textarea);
+  }
+
+  function showCopySuccess(elementId) {
+    const btn = document.getElementById(elementId).parentElement.querySelector('.copy-btn');
+    const originalText = btn.textContent;
+    btn.textContent = '✅ 已复制';
+    btn.style.background = '#28a745';
+
+    setTimeout(() => {
+      btn.textContent = originalText;
+      btn.style.background = '#667eea';
+    }, 2000);
+  }
+</script>
+</body>
+</html>

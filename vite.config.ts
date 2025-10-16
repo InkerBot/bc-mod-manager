@@ -10,10 +10,9 @@ console.warn('BMM already initialized');
 }else{
 window.bmm={};
 window.bmm.shadowRootContainer=document.createElement('div');
-window.bmm.shadowRootContainer.style='position:fixed;top:0;left:0;width:100vw;height:100vh;z-index:650;';
+window.bmm.shadowRootContainer.style='position:fixed;z-index:650;';
 window.bmm.shadowRoot=window.bmm.shadowRootContainer.attachShadow({mode: 'closed'});
 window.bmm.root=document.createElement('div');
-window.bmm.root.style='position:fixed;top:0;left:0;width:100vw;height:100vh;';
 window.bmm.root.id='root';
 window.bmm.shadowRoot.appendChild(window.bmm.root);
 document.body.appendChild(window.bmm.shadowRootContainer);

@@ -1,0 +1,35 @@
+@import "tailwindcss";
+
+.menu-button {
+  z-index: 50;
+  transition: all 0.3s ease;
+  cursor: pointer;
+}
+
+.menu-button.open {
+  transform: rotate(45deg);
+}
+
+.sub-button {
+  position: absolute;
+  transition: all 0.3s ease;
+  transform: scale(0);
+  transform-origin: center;
+  opacity: 0;
+  pointer-events: none;
+}
+
+.sub-button.open {
+  transform: scale(1);
+  opacity: 1;
+  pointer-events: auto;
+  cursor: pointer;
+}
+
+.sub-button:nth-child(1) { transform: translate(-3.25em, -2rem); }
+.sub-button:nth-child(2) { transform: translate(-3.25em, -2rem); }
+.sub-button:nth-child(3) { transform: translate(-3.25em, -2rem); }
+
+.sub-button.open:nth-child(1) { transform: translate(-3.25em, 0); }
+.sub-button.open:nth-child(2) { transform: translate(-3.25em, 2rem); }
+.sub-button.open:nth-child(3) { transform: translate(-3.25em, 4rem); }

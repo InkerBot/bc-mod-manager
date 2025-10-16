@@ -1,5 +1,5 @@
-import language_en from "./en.json";
-import language_cn from "./cn.json";
+import language_en from "./EN.json";
+import language_cn from "./CN.json";
 import {LogService} from "../service/LogService.ts";
 
 const registry: {[k: string]: {[k: string]: string}} = {

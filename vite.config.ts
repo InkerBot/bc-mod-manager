@@ -64,7 +64,7 @@ export default defineConfig({
           if (file.endsWith('.js')) {
             const chunk = bundle[file]
             if (chunk.type === 'chunk' && chunk.isEntry) {
-              chunk.code = bmmInitialization.replace(/[\n\t]+/g, '')
+              chunk.code = '(()=>{' + bmmInitialization.replace(/[\n\t]+/g, '')
                 + chunk.code + '}})()'
             }
           }
@@ -80,4 +80,8 @@ export default defineConfig({
       }
     },
   ],
+  build: {
+    modulePreload: false,
+    sourcemap: 'hidden',
+  }
 })

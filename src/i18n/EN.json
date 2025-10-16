@@ -3,7 +3,6 @@
   "button-registry-manager": "Registry Manager",
   "button-log-viewer": "Log Viewer",
   "button-close": "Close",
-
   "title-mod-manager": "Mod Manager",
   "label-total-mods": "Total Mods",
   "label-enabled-mods": "Enabled",
@@ -15,30 +14,23 @@
   "label-registry": "Registry",
   "label-selected-version": "Version",
   "label-available-versions": "Available Versions",
-
   "filter-all-mods": "All Mods",
   "filter-enabled-only": "Enabled Only",
   "filter-disabled-only": "Disabled Only",
-
   "placeholder-search-mods": "Search mods by name, description, author, or tags...",
-
   "button-remove-mod": "Remove",
   "button-install-mod": "Install",
   "button-join-discord": "Join Server",
   "button-less": "Less",
   "button-more": "More",
-
   "no-mods-available": "No mods available",
   "no-mods-available-detail": "Please add and fetch registries in the Registry Manager first.",
   "no-mods-match-search": "No mods match your search criteria.",
   "showing-x-of-y-mods": "Showing {x} of {y} mods",
-
   "title-registry-manager": "Registry Manager",
   "title-add-new-registry": "Add New Registry",
   "title-registered-registries": "Registered Registries",
-
   "placeholder-registry-url": "Enter registry URL (e.g., https://example.com/registry.json)",
-
   "button-add": "Add",
   "button-save": "Save",
   "button-cancel": "Cancel",
@@ -47,17 +39,14 @@
   "button-fetch": "Fetch",
   "button-fetch-all": "Fetch All",
   "button-fetching": "Fetching...",
-
   "label-added": "Added",
   "label-updated": "Updated",
   "label-cached": "Cached",
   "label-error": "Error",
   "label-mod": "mod",
   "label-mods": "mods",
-
   "message-no-registries": "No registries added yet. Add your first registry above.",
   "message-total-registries": "Total Registries: {count}",
-
   "error-enter-url": "Please enter a URL",
   "error-add-registry-failed": "Failed to add registry. Please check the URL is valid and not a duplicate.",
   "error-update-registry-failed": "Failed to update registry. Please check the URL is valid and not a duplicate.",
@@ -65,19 +54,14 @@
   "error-fetch-registry-failed": "Failed to fetch registry: {error}",
   "error-fetch-registries-failed": "Failed to fetch registries: {error}",
   "error-no-registries-to-fetch": "No registries to fetch",
-
   "confirm-delete-registry": "Are you sure you want to delete this registry?",
-
   "registry-type-fusam": "Fusam",
   "registry-type-aurora": "Aurora",
-
   "title-fetch-registry": "Fetch registry data",
   "title-edit-registry": "Edit",
   "title-delete-registry": "Delete",
-
   "title-log-manager": "Log Manager",
   "subtitle-log-manager": "View application logs and download crash reports",
-
   "label-total-logs": "Total Logs",
   "label-debug": "Debug",
   "label-info": "Info",
@@ -88,23 +72,53 @@
   "label-auto-refresh": "Auto Refresh",
   "label-logs-count": "Logs ({count})",
   "label-registered-debug-methods": "Registered Debug Methods ({count})",
-
   "filter-all-levels": "All Levels",
   "filter-debug": "Debug",
   "filter-info": "Info",
   "filter-warnings": "Warnings",
   "filter-errors": "Errors",
-
   "placeholder-search-logs": "Search logs...",
-
   "button-refresh": "Refresh",
   "button-download-crash-report": "Download Crash Report",
   "button-downloading": "Downloading...",
   "button-clear-logs": "Clear Logs",
-
   "message-no-logs-found": "No logs found",
   "message-adjust-filters": "Try adjusting your filters",
   "message-logs-will-appear": "Logs will appear here as the application runs",
-
-  "confirm-clear-logs": "Are you sure you want to clear all logs?"
+  "confirm-clear-logs": "Are you sure you want to clear all logs?",
+  "title-add-custom-extension": "Add Custom Extension",
+  "button-add-custom-extension": "Add Custom Extension",
+  "button-manage-custom-extensions": "Manage Custom Extensions",
+  "label-extension-name": "Extension Name",
+  "label-extension-author": "Author",
+  "label-extension-description": "Description",
+  "label-extension-source-url": "Source URL",
+  "label-extension-type": "Type",
+  "label-extension-icon-url": "Icon URL (Optional)",
+  "label-extension-repository-url": "Repository URL (Optional)",
+  "label-extension-website-url": "Website URL (Optional)",
+  "label-extension-tags": "Tags (comma-separated, optional)",
+  "label-custom-extensions": "Custom Extensions",
+  "placeholder-extension-name": "Enter extension name",
+  "placeholder-extension-author": "Enter author name",
+  "placeholder-extension-description": "Enter extension description",
+  "placeholder-extension-source-url": "Enter source URL (e.g., https://example.com/mod.js or file:///path/to/local/mod.js)",
+  "placeholder-extension-icon-url": "Enter icon URL",
+  "placeholder-extension-repository-url": "Enter repository URL",
+  "placeholder-extension-website-url": "Enter website URL",
+  "placeholder-extension-tags": "e.g., tools, enhancement, custom",
+  "option-type-script": "Script",
+  "option-type-module": "Module",
+  "error-extension-name-required": "Extension name is required",
+  "error-extension-source-url-required": "Source URL is required",
+  "error-extension-invalid-url": "Invalid URL format",
+  "error-add-extension-failed": "Failed to add custom extension",
+  "error-update-extension-failed": "Failed to update custom extension",
+  "error-delete-extension-failed": "Failed to delete custom extension",
+  "confirm-delete-extension": "Are you sure you want to delete this custom extension?",
+  "message-no-custom-extensions": "No custom extensions added yet",
+  "message-custom-extensions-info": "Custom extensions allow you to add your own extensions or locally developed ones. Supports http://, https://, and file:// protocols.",
+  "success-extension-added": "Custom extension added successfully",
+  "success-extension-updated": "Custom extension updated successfully",
+  "success-extension-deleted": "Custom extension deleted successfully"
 }

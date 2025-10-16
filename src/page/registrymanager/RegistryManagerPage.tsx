@@ -1,5 +1,5 @@
 import {Component} from "preact";
-import {type Registry, type RegistryType, RegistryService} from "../../service/RegistryService";
+import {type Registry, RegistryService, type RegistryType} from "../../service/RegistryService";
 import {type CachedRegistryData, RegistryDataService} from "../../service/RegistryDataService";
 import i18n from "../../i18n/i18n";
 
@@ -48,34 +48,34 @@ export default class RegistryManagerPage extends Component<{}, RegistryManagerSt
     allCached.forEach(cached => {
       cachedMap.set(cached.registryId, cached);
     });
-    this.setState({ cachedData: cachedMap });
+    this.setState({cachedData: cachedMap});
   };
 
   handleNewUrlChange = (e: Event) => {
     const target = e.target as HTMLInputElement;
-    this.setState({ newUrl: target.value, error: null });
+    this.setState({newUrl: target.value, error: null});
   };
 
   handleNewTypeChange = (e: Event) => {
     const target = e.target as HTMLSelectElement;
-    this.setState({ newType: target.value as RegistryType, error: null });
+    this.setState({newType: target.value as RegistryType, error: null});
   };
 
   handleEditUrlChange = (e: Event) => {
     const target = e.target as HTMLInputElement;
-    this.setState({ editingUrl: target.value, error: null });
+    this.setState({editingUrl: target.value, error: null});
   };
 
   handleEditTypeChange = (e: Event) => {
     const target = e.target as HTMLSelectElement;
-    this.setState({ editingType: target.value as RegistryType, error: null });
+    this.setState({editingType: target.value as RegistryType, error: null});
   };
 
   handleAdd = () => {
-    const { newUrl, newType } = this.state;
+    const {newUrl, newType} = this.state;
 
     if (!newUrl.trim()) {
-      this.setState({ error: i18n('error-enter-url') });
+      this.setState({error: i18n('error-enter-url')});
       return;
     }
 
@@ -89,7 +89,7 @@ export default class RegistryManagerPage extends Component<{}, RegistryManagerSt
       });
       this.loadRegistries();
     } else {
-      this.setState({ error: i18n('error-add-registry-failed') });
+      this.setState({error: i18n('error-add-registry-failed')});
     }
   };
 
@@ -103,12 +103,12 @@ export default class RegistryManagerPage extends Component<{}, RegistryManagerSt
   };
 
   handleSaveEdit = () => {
-    const { editingId, editingUrl, editingType } = this.state;
+    const {editingId, editingUrl, editingType} = this.state;
 
     if (!editingId) return;
 
     if (!editingUrl.trim()) {
-      this.setState({ error: i18n('error-enter-url') });
+      this.setState({error: i18n('error-enter-url')});
       return;
     }
 
@@ -123,7 +123,7 @@ export default class RegistryManagerPage extends Component<{}, RegistryManagerSt
       });
       this.loadRegistries();
     } else {
-      this.setState({ error: i18n('error-update-registry-failed') });
+      this.setState({error: i18n('error-update-registry-failed')});
     }
   };
 
@@ -146,13 +146,13 @@ export default class RegistryManagerPage extends Component<{}, RegistryManagerSt
         this.loadRegistries();
         this.loadCachedData();
       } else {
-        this.setState({ error: i18n('error-delete-registry-failed') });
+        this.setState({error: i18n('error-delete-registry-failed')});
       }
     }
   };
 
   handleFetchRegistry = async (registry: Registry) => {
-    const { fetchingIds } = this.state;
+    const {fetchingIds} = this.state;
 
     // Prevent multiple simultaneous fetches
     if (fetchingIds.has(registry.id)) {
@@ -161,7 +161,7 @@ export default class RegistryManagerPage extends Component<{}, RegistryManagerSt
 
     // Add to fetching set
     fetchingIds.add(registry.id);
-    this.setState({ fetchingIds: new Set(fetchingIds), error: null });
+    this.setState({fetchingIds: new Set(fetchingIds), error: null});
 
     try {
       const cachedData = await RegistryDataService.fetchRegistry(registry);
@@ -171,32 +171,32 @@ export default class RegistryManagerPage extends Component<{}, RegistryManagerSt
 
       // Remove from fetching set
       fetchingIds.delete(registry.id);
-      this.setState({ fetchingIds: new Set(fetchingIds) });
+      this.setState({fetchingIds: new Set(fetchingIds)});
 
       if (cachedData.error) {
-        this.setState({ error: i18n('error-fetch-registry-failed', { error: cachedData.error }) });
+        this.setState({error: i18n('error-fetch-registry-failed', {error: cachedData.error})});
       }
     } catch (error) {
       console.error('Error fetching registry:', error);
       fetchingIds.delete(registry.id);
       this.setState({
         fetchingIds: new Set(fetchingIds),
-        error: i18n('error-fetch-registry-failed', { error: error instanceof Error ? error.message : 'Unknown error' })
+        error: i18n('error-fetch-registry-failed', {error: error instanceof Error ? error.message : 'Unknown error'})
       });
     }
   };
 
   handleFetchAllRegistries = async () => {
-    const { registries } = this.state;
+    const {registries} = this.state;
 
     if (registries.length === 0) {
-      this.setState({ error: i18n('error-no-registries-to-fetch') });
+      this.setState({error: i18n('error-no-registries-to-fetch')});
       return;
     }
 
     // Mark all as fetching
     const fetchingIds = new Set(registries.map(r => r.id));
-    this.setState({ fetchingIds, error: null });
+    this.setState({fetchingIds, error: null});
 
     try {
       await RegistryDataService.fetchAllRegistries(registries);
@@ -205,18 +205,28 @@ export default class RegistryManagerPage extends Component<{}, RegistryManagerSt
       this.loadCachedData();
 
       // Clear fetching state
-      this.setState({ fetchingIds: new Set() });
+      this.setState({fetchingIds: new Set()});
     } catch (error) {
       console.error('Error fetching registries:', error);
       this.setState({
         fetchingIds: new Set(),
-        error: i18n('error-fetch-registries-failed', { error: error instanceof Error ? error.message : 'Unknown error' })
+        error: i18n('error-fetch-registries-failed', {error: error instanceof Error ? error.message : 'Unknown error'})
       });
     }
   };
 
   render() {
-    const { registries, cachedData, fetchingIds, newUrl, newType, editingId, editingUrl, editingType, error } = this.state;
+    const {
+      registries,
+      cachedData,
+      fetchingIds,
+      newUrl,
+      newType,
+      editingId,
+      editingUrl,
+      editingType,
+      error
+    } = this.state;
 
     return (
       <div className="p-6 max-w-4xl mx-auto">
@@ -420,7 +430,7 @@ export default class RegistryManagerPage extends Component<{}, RegistryManagerSt
         {/* Registry Count */}
         {registries.length > 0 && (
           <div className="mt-4 text-sm text-gray-600 text-center">
-            {i18n('message-total-registries', { count: registries.length.toString() })}
+            {i18n('message-total-registries', {count: registries.length.toString()})}
           </div>
         )}
       </div>

@@ -26,10 +26,26 @@
   cursor: pointer;
 }
 
-.sub-button:nth-child(1) { transform: translate(-3.25em, -2rem); }
-.sub-button:nth-child(2) { transform: translate(-3.25em, -2rem); }
-.sub-button:nth-child(3) { transform: translate(-3.25em, -2rem); }
+.sub-button:nth-child(1) {
+  transform: translate(-3.25em, -2rem);
+}
 
-.sub-button.open:nth-child(1) { transform: translate(-3.25em, 0); }
-.sub-button.open:nth-child(2) { transform: translate(-3.25em, 2rem); }
-.sub-button.open:nth-child(3) { transform: translate(-3.25em, 4rem); }
+.sub-button:nth-child(2) {
+  transform: translate(-3.25em, -2rem);
+}
+
+.sub-button:nth-child(3) {
+  transform: translate(-3.25em, -2rem);
+}
+
+.sub-button.open:nth-child(1) {
+  transform: translate(-3.25em, 0);
+}
+
+.sub-button.open:nth-child(2) {
+  transform: translate(-3.25em, 2rem);
+}
+
+.sub-button.open:nth-child(3) {
+  transform: translate(-3.25em, 4rem);
+}

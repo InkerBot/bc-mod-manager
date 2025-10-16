@@ -38,7 +38,7 @@ export class LogService {
    * @param method - Function that returns debug information
    */
   static registerDebugMethod(name: string, method: () => string | Promise<string>): void {
-    this.debugMethods.set(name, { name, method });
+    this.debugMethods.set(name, {name, method});
     this.log('DEBUG', `Debug method registered: ${name}`);
   }
 
@@ -74,7 +74,7 @@ export class LogService {
       return result;
     } catch (error) {
       const errorMsg = error instanceof Error ? error.message : String(error);
-      this.log('ERROR', `Failed to execute debug method: ${name}`, { error: errorMsg });
+      this.log('ERROR', `Failed to execute debug method: ${name}`, {error: errorMsg});
       throw error;
     }
   }
@@ -91,7 +91,7 @@ export class LogService {
       } catch (error) {
         const errorMsg = error instanceof Error ? error.message : String(error);
         results[name] = `ERROR: ${errorMsg}`;
-        this.log('ERROR', `Failed to execute debug method: ${name}`, { error: errorMsg });
+        this.log('ERROR', `Failed to execute debug method: ${name}`, {error: errorMsg});
       }
     }
 
@@ -250,7 +250,7 @@ export class LogService {
   static async downloadCrashReport(): Promise<void> {
     try {
       const report = await this.generateCrashReport();
-      const blob = new Blob([report], { type: 'text/plain' });
+      const blob = new Blob([report], {type: 'text/plain'});
       const url = URL.createObjectURL(blob);
       const link = document.createElement('a');
       link.href = url;
@@ -263,7 +263,7 @@ export class LogService {
       this.info('Crash report downloaded successfully');
     } catch (error) {
       const errorMsg = error instanceof Error ? error.message : String(error);
-      this.error('Failed to download crash report', { error: errorMsg });
+      this.error('Failed to download crash report', {error: errorMsg});
       throw error;
     }
   }

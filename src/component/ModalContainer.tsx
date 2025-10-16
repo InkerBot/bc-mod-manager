@@ -1,5 +1,5 @@
-import { Component } from "preact";
-import { ModalService, type ModalState } from "../service/ModalService";
+import {Component} from "preact";
+import {ModalService, type ModalState} from "../service/ModalService";
 
 interface ModalContainerState {
   modals: ModalState[];
@@ -26,8 +26,8 @@ class ModalDialog extends Component<ModalDialogProps, ModalDialogState> {
   }
 
   handleAction = (action: string) => {
-    const { modal, onClose } = this.props;
-    const { inputValue } = this.state;
+    const {modal, onClose} = this.props;
+    const {inputValue} = this.state;
 
     // Call the callback with action and input value (if input exists)
     if (modal.input) {
@@ -39,17 +39,17 @@ class ModalDialog extends Component<ModalDialogProps, ModalDialogState> {
 
   handleInputChange = (e: Event) => {
     const target = e.target as HTMLInputElement | HTMLTextAreaElement;
-    this.setState({ inputValue: target.value });
+    this.setState({inputValue: target.value});
   };
 
   render() {
-    const { modal } = this.props;
-    const { inputValue } = this.state;
+    const {modal} = this.props;
+    const {inputValue} = this.state;
 
     // Default buttons if not specified
-    const buttons = modal.buttons ?? { submit: "OK", cancel: "Cancel" };
+    const buttons = modal.buttons ?? {submit: "OK", cancel: "Cancel"};
     const submitLabel = buttons.submit;
-    
+
     // Get all other buttons (excluding submit)
     const otherButtons = Object.entries(buttons).filter(([key]) => key !== "submit");
 
@@ -100,7 +100,7 @@ class ModalDialog extends Component<ModalDialogProps, ModalDialogState> {
                 {label}
               </button>
             ))}
-            
+
             {/* Submit button */}
             <button
               onClick={() => this.handleAction("submit")}
@@ -132,7 +132,7 @@ export default class ModalContainer extends Component<{}, ModalContainerState> {
   componentDidMount() {
     // Subscribe to modal state changes
     this.unsubscribe = ModalService.subscribe((modals) => {
-      this.setState({ modals });
+      this.setState({modals});
     });
   }
 
@@ -149,13 +149,13 @@ export default class ModalContainer extends Component<{}, ModalContainerState> {
     if (modal) {
       modal.callback(action, inputValue);
     }
-    
+
     // Close the modal
     ModalService.close(modalId);
   };
 
   render() {
-    const { modals } = this.state;
+    const {modals} = this.state;
 
     // Render all modals (stacked on top of each other if multiple)
     return (

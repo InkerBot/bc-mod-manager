@@ -2,7 +2,7 @@ import language_en from "./EN.json";
 import language_cn from "./CN.json";
 import {LogService} from "../service/LogService.ts";
 
-const registry: {[k: string]: {[k: string]: string}} = {
+const registry: { [k: string]: { [k: string]: string } } = {
   'EN': language_en,
   'CN': language_cn,
 }

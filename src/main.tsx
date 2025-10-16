@@ -1,4 +1,4 @@
-import { render } from 'preact'
+import {render} from 'preact'
 import './index.css'
 import './fusam.ts'
 import './bcmodsdk.js'
@@ -77,7 +77,7 @@ LogService.registerDebugMethod('LocalStorage Usage', () => {
     if (localStorage.hasOwnProperty(key)) {
       const size = localStorage[key].length + key.length;
       totalSize += size;
-      items.push({ key, size });
+      items.push({key, size});
     }
   }
 
@@ -111,6 +111,6 @@ LogService.debug('Debug methods registered', {
   count: LogService.getDebugMethods().length
 });
 
-render(<App />, window.bmm.root);
+render(<App/>, window.bmm.root);
 
 ModLoaderService.loadAllEnabledMods();

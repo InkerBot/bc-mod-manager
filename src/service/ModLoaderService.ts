@@ -1,5 +1,5 @@
-import { ModService } from './ModService';
-import { LogService } from './LogService';
+import {ModService} from './ModService';
+import {LogService} from './LogService';
 
 /**
  * Mod Loader Service
@@ -9,6 +9,7 @@ export class ModLoaderService {
   private static loadedMods: Set<string> = new Set();
   private static initialEnabledMods: Set<string> = new Set();
   private static hasDisabledMods: boolean = false;
+  private static scheduledLoad: number | null = null;
 
   /**
    * Initialize the mod loader
@@ -27,7 +28,6 @@ export class ModLoaderService {
     LogService.info(`ModLoaderService: Initialize succeed`);
   }
 
-  private static scheduledLoad: number | null = null;
   /**
    * Load all enabled mods
    */
@@ -43,17 +43,6 @@ export class ModLoaderService {
         }
       }, 50);
     }
-  }
-
-  private static loadAllEnabledModsImpl(): void {
-    const modsWithDetails = ModService.getAllModsWithDetails();
-    const enabledMods = modsWithDetails.filter(mod => mod.enabled);
-
-    LogService.info(`ModLoaderService: Loading ${enabledMods.length} enabled mods`);
-
-    enabledMods.forEach(mod => {
-      this.loadMod(mod.modId, mod.type || 'script', mod.registryId, mod.sourceUrl, mod.name, mod.selectedVersion);
-    });
   }
 
   static preloadAllEnabledMods(): void {
@@ -278,6 +267,17 @@ export class ModLoaderService {
     this.loadedMods.clear();
 
     LogService.info('ModLoaderService: All mod scripts removed');
+  }
+
+  private static loadAllEnabledModsImpl(): void {
+    const modsWithDetails = ModService.getAllModsWithDetails();
+    const enabledMods = modsWithDetails.filter(mod => mod.enabled);
+
+    LogService.info(`ModLoaderService: Loading ${enabledMods.length} enabled mods`);
+
+    enabledMods.forEach(mod => {
+      this.loadMod(mod.modId, mod.type || 'script', mod.registryId, mod.sourceUrl, mod.name, mod.selectedVersion);
+    });
   }
 }
 

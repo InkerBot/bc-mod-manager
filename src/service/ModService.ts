@@ -1,6 +1,7 @@
-import { LocalStorageService } from './LocalStorageService';
-import { RegistryDataService, type FusamAddon, type CachedRegistryData } from './RegistryDataService';
-import { ModLoaderService } from './ModLoaderService';
+import {LocalStorageService} from './LocalStorageService';
+import {type CachedRegistryData, type FusamAddon, RegistryDataService} from './RegistryDataService';
+import {ModLoaderService} from './ModLoaderService';
+import {CustomExtensionService} from './CustomExtensionService';
 
 /**
  * Mod Configuration
@@ -142,7 +143,7 @@ export class ModService {
   }
 
   /**
-   * Get all mods with full details from cached registry data
+   * Get all mods with full details from cached registry data (including custom extensions)
    */
   static getAllModsWithDetails(): ModWithDetails[] {
     const configs = this.getAllConfigs();
@@ -155,8 +156,41 @@ export class ModService {
       cacheMap.set(cache.registryId, cache);
     });
 
+    // Create a map of custom extensions
+    const customRegistryId = CustomExtensionService.getCustomRegistryId();
+    const customExtensionsMap = new Map<string, any>();
+    CustomExtensionService.toFusamAddons().forEach(addon => {
+      customExtensionsMap.set(addon.id, addon);
+    });
+
     // Combine configs with registry data
     configs.forEach(config => {
+      // Check if it's a custom extension
+      if (config.registryId === customRegistryId) {
+        const addon = customExtensionsMap.get(config.modId);
+        if (addon) {
+          const availableVersions = addon.versions.map((v: any) => v.distribution);
+          const selectedVersionData = addon.versions.find((v: any) => v.distribution === config.selectedVersion);
+
+          modsWithDetails.push({
+            ...config,
+            name: addon.name,
+            description: addon.description,
+            author: addon.author,
+            repository: addon.repository,
+            tags: addon.tags,
+            type: addon.type,
+            icon: addon.icon,
+            website: addon.website,
+            discord: addon.discord,
+            availableVersions: availableVersions,
+            sourceUrl: selectedVersionData?.source,
+          });
+        }
+        return;
+      }
+
+      // Handle registry mods
       const cache = cacheMap.get(config.registryId);
       if (!cache || !cache.data) return;
 
@@ -191,7 +225,7 @@ export class ModService {
   }
 
   /**
-   * Get available mods from all cached registries
+   * Get available mods from all cached registries (including custom extensions)
    */
   static getAvailableMods(): Array<{
     addon: FusamAddon;
@@ -208,6 +242,23 @@ export class ModService {
       config: ModConfig | null;
     }> = [];
 
+    // Add custom extensions
+    const customExtensions = CustomExtensionService.toFusamAddons();
+    const customRegistryId = CustomExtensionService.getCustomRegistryId();
+    customExtensions.forEach(addon => {
+      const config = configs.find(
+        c => c.modId === addon.id && c.registryId === customRegistryId
+      ) || null;
+
+      availableMods.push({
+        addon,
+        registryId: customRegistryId,
+        registryUrl: 'Custom Extensions',
+        config,
+      });
+    });
+
+    // Add mods from registries
     cachedData.forEach(cache => {
       if (!cache.data || cache.error) return;
 

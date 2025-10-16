@@ -1,7 +1,8 @@
 import {Component} from "preact";
-import {ModService, type ModConfig} from "../../service/ModService";
+import {type ModConfig, ModService} from "../../service/ModService";
 import {type FusamAddon} from "../../service/RegistryDataService";
 import i18n from "../../i18n/i18n.ts";
+import CustomExtensionModal from "../../component/CustomExtensionModal";
 
 interface ModManagerState {
   availableMods: Array<{
@@ -16,6 +17,7 @@ interface ModManagerState {
   expandedModId: string | null;
   // Track selected versions for mods that aren't installed yet
   pendingVersions: Map<string, string>; // key: `${modId}_${registryId}`, value: version
+  showCustomExtensionModal: boolean;
 }
 
 export default class ModManagerPage extends Component<{}, ModManagerState> {
@@ -28,6 +30,7 @@ export default class ModManagerPage extends Component<{}, ModManagerState> {
       error: null,
       expandedModId: null,
       pendingVersions: new Map(),
+      showCustomExtensionModal: false,
     };
   }
 
@@ -37,7 +40,7 @@ export default class ModManagerPage extends Component<{}, ModManagerState> {
 
   loadMods = () => {
     const availableMods = ModService.getAvailableMods();
-    this.setState({ availableMods });
+    this.setState({availableMods});
   };
 
   handleInstallMod = (modId: string, registryId: string) => {
@@ -62,7 +65,7 @@ export default class ModManagerPage extends Component<{}, ModManagerState> {
         // Clear pending version after install
         const newPendingVersions = new Map(this.state.pendingVersions);
         newPendingVersions.delete(uniqueKey);
-        this.setState({ pendingVersions: newPendingVersions });
+        this.setState({pendingVersions: newPendingVersions});
       }
     } else {
       ModService.enableMod(modId, registryId);
@@ -81,7 +84,7 @@ export default class ModManagerPage extends Component<{}, ModManagerState> {
       // For non-installed mods, store in pendingVersions
       const newPendingVersions = new Map(this.state.pendingVersions);
       newPendingVersions.set(uniqueKey, version);
-      this.setState({ pendingVersions: newPendingVersions });
+      this.setState({pendingVersions: newPendingVersions});
     }
   };
 
@@ -93,7 +96,7 @@ export default class ModManagerPage extends Component<{}, ModManagerState> {
       // Clear pending version if exists
       const newPendingVersions = new Map(this.state.pendingVersions);
       newPendingVersions.delete(uniqueKey);
-      this.setState({ pendingVersions: newPendingVersions });
+      this.setState({pendingVersions: newPendingVersions});
 
       this.loadMods();
     }
@@ -101,12 +104,12 @@ export default class ModManagerPage extends Component<{}, ModManagerState> {
 
   handleFilterChange = (e: Event) => {
     const target = e.target as HTMLSelectElement;
-    this.setState({ filter: target.value as 'all' | 'enabled' | 'disabled' });
+    this.setState({filter: target.value as 'all' | 'enabled' | 'disabled'});
   };
 
   handleSearchChange = (e: Event) => {
     const target = e.target as HTMLInputElement;
-    this.setState({ searchQuery: target.value });
+    this.setState({searchQuery: target.value});
   };
 
   toggleExpanded = (modId: string) => {
@@ -115,8 +118,21 @@ export default class ModManagerPage extends Component<{}, ModManagerState> {
     }));
   };
 
+  handleOpenCustomExtensionModal = () => {
+    this.setState({showCustomExtensionModal: true});
+  };
+
+  handleCloseCustomExtensionModal = () => {
+    this.setState({showCustomExtensionModal: false});
+  };
+
+  handleCustomExtensionChanged = () => {
+    // Reload mods when custom extensions are added/updated/deleted
+    this.loadMods();
+  };
+
   getFilteredMods = () => {
-    const { availableMods, filter, searchQuery } = this.state;
+    const {availableMods, filter, searchQuery} = this.state;
 
     let filtered = availableMods;
 
@@ -143,14 +159,22 @@ export default class ModManagerPage extends Component<{}, ModManagerState> {
   };
 
   render() {
-    const { error, expandedModId } = this.state;
+    const {error, expandedModId, showCustomExtensionModal} = this.state;
     const filteredMods = this.getFilteredMods();
     const enabledCount = ModService.getEnabledCount();
     const totalCount = this.state.availableMods.length;
 
     return (
       <div className="p-6 max-w-6xl mx-auto">
-        <h1 className="text-3xl font-bold mb-6 text-blue-600">{i18n('title-mod-manager')}</h1>
+        <div className="flex items-center justify-between mb-6">
+          <h1 className="text-3xl font-bold text-blue-600">{i18n('title-mod-manager')}</h1>
+          <button
+            onClick={this.handleOpenCustomExtensionModal}
+            className="px-4 py-2 bg-green-500 text-white rounded hover:bg-green-600 transition-colors font-medium"
+          >
+            + {i18n('button-manage-custom-extensions')}
+          </button>
+        </div>
 
         {/* Error Message */}
         {error && (
@@ -237,7 +261,9 @@ export default class ModManagerPage extends Component<{}, ModManagerState> {
                           src={mod.addon.icon}
                           alt={mod.addon.name}
                           className="w-12 h-12 rounded object-cover flex-shrink-0"
-                          onError={(e) => { (e.target as HTMLImageElement).style.display = 'none'; }}
+                          onError={(e) => {
+                            (e.target as HTMLImageElement).style.display = 'none';
+                          }}
                         />
                       )}
 
@@ -389,7 +415,8 @@ export default class ModManagerPage extends Component<{}, ModManagerState> {
                               </div>
                               {mod.addon.versions.length > 0 && (
                                 <div className="md:col-span-2">
-                                  <span className="font-semibold text-gray-700">{i18n('label-available-versions')}:</span>
+                                  <span
+                                    className="font-semibold text-gray-700">{i18n('label-available-versions')}:</span>
                                   <div className="mt-1 flex gap-2 flex-wrap">
                                     {mod.addon.versions.map(v => (
                                       <span
@@ -423,6 +450,14 @@ export default class ModManagerPage extends Component<{}, ModManagerState> {
           <div className="mt-4 text-sm text-gray-600 text-center">
             {i18n('showing-x-of-y-mods', {x: filteredMods.length, y: totalCount})}
           </div>
+        )}
+
+        {/* Custom Extension Modal */}
+        {showCustomExtensionModal && (
+          <CustomExtensionModal
+            onClose={this.handleCloseCustomExtensionModal}
+            onExtensionAdded={this.handleCustomExtensionChanged}
+          />
         )}
       </div>
     );

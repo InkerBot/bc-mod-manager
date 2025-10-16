@@ -1,4 +1,4 @@
-import { LocalStorageService } from './LocalStorageService';
+import {LocalStorageService} from './LocalStorageService';
 import {LogService} from "./LogService.ts";
 import {RegistryDataService} from "./RegistryDataService.ts";
 

@@ -74,7 +74,7 @@ export default class App extends Component<{}, AppState> {
     return (
       <>
         {/* Menu Button */}
-        {this.state.showButton && <div className="fixed top-4 right-12 z-50">
+        {(this.state.showButton && !currentPage) && <div className="fixed top-4 right-12 z-50">
           <button
             className={`menu-button w-8 h-8 rounded-full bg-blue-800 text-white ${menuOpen ? 'open' : ''}`}
             onClick={this.toggleMenu}
@@ -119,16 +119,16 @@ export default class App extends Component<{}, AppState> {
 
               {/* Page Content */}
               <div className="clear-both">
-                {currentPage === 'mod-manager' && <ModManagerPage />}
-                {currentPage === 'registry-manager' && <RegistryManagerPage />}
-                {currentPage === 'log-viewer' && <LogManagerPage />}
+                {currentPage === 'mod-manager' && <ModManagerPage/>}
+                {currentPage === 'registry-manager' && <RegistryManagerPage/>}
+                {currentPage === 'log-viewer' && <LogManagerPage/>}
               </div>
             </div>
           </div>
         )}
 
         {/* Modal Container */}
-        <ModalContainer />
+        <ModalContainer/>
       </>
     )
   }

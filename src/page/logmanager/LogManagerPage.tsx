@@ -1,5 +1,5 @@
-import { Component } from "preact";
-import { LogService, type LogLevel, type LogEntry } from "../../service/LogService";
+import {Component} from "preact";
+import {type LogEntry, type LogLevel, LogService} from "../../service/LogService";
 import i18n from "../../i18n/i18n";
 
 interface LogManagerState {
@@ -39,26 +39,26 @@ export default class LogManagerPage extends Component<{}, LogManagerState> {
 
   loadLogs = () => {
     const logs = LogService.getAllLogs();
-    this.setState({ logs });
+    this.setState({logs});
   };
 
   loadDebugMethods = () => {
     const debugMethods = LogService.getDebugMethods();
-    this.setState({ debugMethods });
+    this.setState({debugMethods});
   };
 
   handleFilterChange = (filter: LogLevel | 'all') => {
-    this.setState({ filter });
+    this.setState({filter});
   };
 
   handleSearchChange = (e: Event) => {
     const target = e.target as HTMLInputElement;
-    this.setState({ searchQuery: target.value });
+    this.setState({searchQuery: target.value});
   };
 
   handleAutoRefreshToggle = () => {
     const newAutoRefresh = !this.state.autoRefresh;
-    this.setState({ autoRefresh: newAutoRefresh });
+    this.setState({autoRefresh: newAutoRefresh});
 
     if (newAutoRefresh) {
       this.refreshInterval = window.setInterval(() => {
@@ -80,14 +80,14 @@ export default class LogManagerPage extends Component<{}, LogManagerState> {
   };
 
   handleDownloadCrashReport = async () => {
-    this.setState({ isDownloading: true });
+    this.setState({isDownloading: true});
     try {
       await LogService.downloadCrashReport();
     } catch (error) {
       const errorMsg = error instanceof Error ? error.message : String(error);
       console.error('Error downloading crash report:', errorMsg);
     } finally {
-      this.setState({ isDownloading: false });
+      this.setState({isDownloading: false});
     }
   };
 
@@ -137,7 +137,7 @@ export default class LogManagerPage extends Component<{}, LogManagerState> {
   };
 
   render() {
-    const { filter, searchQuery, autoRefresh, debugMethods, isDownloading } = this.state;
+    const {filter, searchQuery, autoRefresh, debugMethods, isDownloading} = this.state;
     const filteredLogs = this.getFilteredLogs();
     const stats = LogService.getLogStats();
 
@@ -242,7 +242,8 @@ export default class LogManagerPage extends Component<{}, LogManagerState> {
           {debugMethods.length > 0 && (
             <div className="mt-4 pt-4 border-t border-blue-100">
               <div className="text-sm text-gray-600">
-                <span className="font-medium">{i18n('label-registered-debug-methods', { count: debugMethods.length.toString() })}:</span>
+                <span
+                  className="font-medium">{i18n('label-registered-debug-methods', {count: debugMethods.length.toString()})}:</span>
                 <span className="ml-2">{debugMethods.join(', ')}</span>
               </div>
             </div>
@@ -253,7 +254,7 @@ export default class LogManagerPage extends Component<{}, LogManagerState> {
         <div className="bg-white rounded-lg shadow border border-blue-100">
           <div className="p-4 border-b border-blue-100">
             <h2 className="text-lg font-semibold text-gray-800">
-              {i18n('label-logs-count', { count: filteredLogs.length.toString() })}
+              {i18n('label-logs-count', {count: filteredLogs.length.toString()})}
             </h2>
           </div>
 

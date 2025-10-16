@@ -27,27 +27,10 @@ export class ModalService {
     this.listeners.add(listener);
     // Immediately call with current state
     listener([...this.modals]);
-    
+
     return () => {
       this.listeners.delete(listener);
     };
-  }
-
-  /**
-   * Notify all listeners of state change
-   */
-  private static notify(): void {
-    const modalsCopy = [...this.modals];
-    this.listeners.forEach(listener => {
-      listener(modalsCopy);
-    });
-  }
-
-  /**
-   * Generate a unique modal ID
-   */
-  private static generateId(): string {
-    return `modal_${Date.now()}_${this.modalIdCounter++}`;
   }
 
   /**
@@ -116,6 +99,23 @@ export class ModalService {
    */
   static getModals(): ModalState[] {
     return [...this.modals];
+  }
+
+  /**
+   * Notify all listeners of state change
+   */
+  private static notify(): void {
+    const modalsCopy = [...this.modals];
+    this.listeners.forEach(listener => {
+      listener(modalsCopy);
+    });
+  }
+
+  /**
+   * Generate a unique modal ID
+   */
+  private static generateId(): string {
+    return `modal_${Date.now()}_${this.modalIdCounter++}`;
   }
 }
 

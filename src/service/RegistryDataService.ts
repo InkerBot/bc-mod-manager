@@ -1,5 +1,5 @@
-import { LocalStorageService } from './LocalStorageService';
-import type { Registry, RegistryType } from './RegistryService';
+import {LocalStorageService} from './LocalStorageService';
+import type {Registry, RegistryType} from './RegistryService';
 import {LogService} from "./LogService.ts";
 
 /**
@@ -153,22 +153,6 @@ export class RegistryDataService {
   }
 
   /**
-   * Save cached data
-   */
-  private static saveToCache(cachedData: CachedRegistryData): void {
-    const allCached = this.getAllCached();
-    const index = allCached.findIndex(c => c.registryId === cachedData.registryId);
-
-    if (index !== -1) {
-      allCached[index] = cachedData;
-    } else {
-      allCached.push(cachedData);
-    }
-
-    LocalStorageService.setItem(this.CACHE_STORAGE_KEY, allCached);
-  }
-
-  /**
    * Clear cache for a specific registry
    */
   static clearCache(registryId: string): void {
@@ -217,6 +201,22 @@ export class RegistryDataService {
    */
   static isCacheStale(cachedData: CachedRegistryData, maxAgeMs: number = 3600000): boolean {
     return this.getCacheAge(cachedData) > maxAgeMs;
+  }
+
+  /**
+   * Save cached data
+   */
+  private static saveToCache(cachedData: CachedRegistryData): void {
+    const allCached = this.getAllCached();
+    const index = allCached.findIndex(c => c.registryId === cachedData.registryId);
+
+    if (index !== -1) {
+      allCached[index] = cachedData;
+    } else {
+      allCached.push(cachedData);
+    }
+
+    LocalStorageService.setItem(this.CACHE_STORAGE_KEY, allCached);
   }
 }
 

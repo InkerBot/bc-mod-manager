@@ -1,16 +1,22 @@
 import './app.css'
 import {Component} from "preact";
 import i18n from "./i18n/i18n.ts";
+import RegistryManagerPage from "./page/registrymanager/RegistryManagerPage.tsx";
+import ModManagerPage from "./page/modmanager/ModManagerPage.tsx";
+
+type PageType = 'mod-manager' | 'registry-manager' | 'log-viewer' | null;
 
 interface AppState {
   menuOpen: boolean;
+  currentPage: PageType;
 }
 
 export default class App extends Component<{}, AppState> {
   constructor(props: {}) {
     super(props);
     this.state = {
-      menuOpen: false
+      menuOpen: false,
+      currentPage: null
     };
   }
 
@@ -22,30 +28,81 @@ export default class App extends Component<{}, AppState> {
     this.setState({menuOpen: false});
   }
 
+  openPage = (page: PageType) => {
+    this.setState({
+      currentPage: page,
+      menuOpen: false
+    });
+  }
+
+  closePage = () => {
+    this.setState({currentPage: null});
+  }
+
   render() {
-    const {menuOpen} = this.state;
+    const {menuOpen, currentPage} = this.state;
 
     return (
-      <div className="fixed top-4 right-12">
-        <button
-          className={`menu-button w-8 h-8 rounded-full bg-blue-800 text-white ${menuOpen ? 'open' : ''}`}
-          onClick={this.toggleMenu}
-        >
-          +
-        </button>
+      <>
+        {/* Menu Button */}
+        <div className="fixed top-4 right-12 z-50">
+          <button
+            className={`menu-button w-8 h-8 rounded-full bg-blue-800 text-white ${menuOpen ? 'open' : ''}`}
+            onClick={this.toggleMenu}
+          >
+            +
+          </button>
 
-        <div className="relative text-white text-xs">
-          <button className={`sub-button w-28 h-8 bg-red-900 ${menuOpen ? 'open' : ''}`} onClick={this.closeMenu}>
-            {i18n('button-mod-manager')}
-          </button>
-          <button className={`sub-button w-28 h-8 bg-green-900 ${menuOpen ? 'open' : ''}`} onClick={this.closeMenu}>
-            {i18n('button-registry-manager')}
-          </button>
-          <button className={`sub-button w-28 h-8 bg-yellow-900 ${menuOpen ? 'open' : ''}`} onClick={this.closeMenu}>
-            {i18n('button-log-viewer')}
-          </button>
+          <div className="relative text-white text-xs">
+            <button
+              className={`sub-button w-28 h-8 bg-red-900 ${menuOpen ? 'open' : ''}`}
+              onClick={() => this.openPage('mod-manager')}
+            >
+              {i18n('button-mod-manager')}
+            </button>
+            <button
+              className={`sub-button w-28 h-8 bg-green-900 ${menuOpen ? 'open' : ''}`}
+              onClick={() => this.openPage('registry-manager')}
+            >
+              {i18n('button-registry-manager')}
+            </button>
+            <button
+              className={`sub-button w-28 h-8 bg-yellow-900 ${menuOpen ? 'open' : ''}`}
+              onClick={() => this.openPage('log-viewer')}
+            >
+              {i18n('button-log-viewer')}
+            </button>
+          </div>
         </div>
-      </div>
+
+        {/* Page Modal/Overlay */}
+        {currentPage && (
+          <div className="fixed inset-0 bg-black bg-opacity-50 z-40 flex items-center justify-center p-4">
+            <div className="bg-white rounded-lg shadow-2xl max-w-6xl w-full max-h-[90vh] overflow-auto relative">
+              {/* Close Button */}
+              <button
+                onClick={this.closePage}
+                className="sticky top-4 float-right mr-4 mt-4 w-10 h-10 bg-red-500 text-white rounded-full hover:bg-red-600 transition-colors z-50 flex items-center justify-center text-2xl font-bold"
+                title="Close"
+              >
+                ×
+              </button>
+
+              {/* Page Content */}
+              <div className="clear-both">
+                {currentPage === 'mod-manager' && <ModManagerPage />}
+                {currentPage === 'registry-manager' && <RegistryManagerPage />}
+                {currentPage === 'log-viewer' && (
+                  <div className="p-6">
+                    <h1 className="text-3xl font-bold mb-6 text-gray-800">Log Viewer</h1>
+                    <p className="text-gray-600">Log Viewer page coming soon...</p>
+                  </div>
+                )}
+              </div>
+            </div>
+          </div>
+        )}
+      </>
     )
   }
 }

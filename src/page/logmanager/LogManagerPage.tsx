@@ -1,5 +1,5 @@
 import { Component } from "preact";
-import { LogService, LogLevel, type LogEntry } from "../../service/LogService";
+import { LogService, type LogLevel, type LogEntry } from "../../service/LogService";
 import i18n from "../../i18n/i18n";
 
 interface LogManagerState {
@@ -123,13 +123,13 @@ export default class LogManagerPage extends Component<{}, LogManagerState> {
 
   getLevelColor = (level: LogLevel): string => {
     switch (level) {
-      case LogLevel.DEBUG:
+      case 'DEBUG':
         return 'bg-gray-100 text-gray-700';
-      case LogLevel.INFO:
+      case 'INFO':
         return 'bg-blue-100 text-blue-700';
-      case LogLevel.WARN:
+      case 'WARN':
         return 'bg-yellow-100 text-yellow-700';
-      case LogLevel.ERROR:
+      case 'ERROR':
         return 'bg-red-100 text-red-700';
       default:
         return 'bg-gray-100 text-gray-700';
@@ -156,19 +156,19 @@ export default class LogManagerPage extends Component<{}, LogManagerState> {
             <div className="text-sm text-gray-600">{i18n('label-total-logs')}</div>
           </div>
           <div className="bg-gray-50 p-4 rounded-lg shadow border border-gray-200">
-            <div className="text-2xl font-bold text-gray-700">{stats[LogLevel.DEBUG]}</div>
+            <div className="text-2xl font-bold text-gray-700">{stats['DEBUG']}</div>
             <div className="text-sm text-gray-600">{i18n('label-debug')}</div>
           </div>
           <div className="bg-blue-50 p-4 rounded-lg shadow border border-blue-200">
-            <div className="text-2xl font-bold text-blue-700">{stats[LogLevel.INFO]}</div>
+            <div className="text-2xl font-bold text-blue-700">{stats['INFO']}</div>
             <div className="text-sm text-gray-600">{i18n('label-info')}</div>
           </div>
           <div className="bg-yellow-50 p-4 rounded-lg shadow border border-yellow-200">
-            <div className="text-2xl font-bold text-yellow-700">{stats[LogLevel.WARN]}</div>
+            <div className="text-2xl font-bold text-yellow-700">{stats['WARN']}</div>
             <div className="text-sm text-gray-600">{i18n('label-warnings')}</div>
           </div>
           <div className="bg-red-50 p-4 rounded-lg shadow border border-red-200">
-            <div className="text-2xl font-bold text-red-700">{stats[LogLevel.ERROR]}</div>
+            <div className="text-2xl font-bold text-red-700">{stats['ERROR']}</div>
             <div className="text-sm text-gray-600">{i18n('label-errors')}</div>
           </div>
         </div>
@@ -185,10 +185,10 @@ export default class LogManagerPage extends Component<{}, LogManagerState> {
                 className="px-3 py-1.5 text-sm border border-blue-300 rounded focus:outline-none focus:ring-2 focus:ring-blue-500 text-gray-900 bg-white"
               >
                 <option value="all">{i18n('filter-all-levels')}</option>
-                <option value={LogLevel.DEBUG}>{i18n('filter-debug')}</option>
-                <option value={LogLevel.INFO}>{i18n('filter-info')}</option>
-                <option value={LogLevel.WARN}>{i18n('filter-warnings')}</option>
-                <option value={LogLevel.ERROR}>{i18n('filter-errors')}</option>
+                <option value={'DEBUG'}>{i18n('filter-debug')}</option>
+                <option value={'INFO'}>{i18n('filter-info')}</option>
+                <option value={'WARN'}>{i18n('filter-warnings')}</option>
+                <option value={'ERROR'}>{i18n('filter-errors')}</option>
               </select>
             </div>
 

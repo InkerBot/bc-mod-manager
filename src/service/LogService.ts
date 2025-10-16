@@ -1,13 +1,8 @@
 /**
  * Log Level
  */
-// @ts-ignore
-export enum LogLevel {
-  DEBUG = 'DEBUG',
-  INFO = 'INFO',
-  WARN = 'WARN',
-  ERROR = 'ERROR',
-}
+export type LogLevel = 'DEBUG' | 'INFO' | 'WARN' | 'ERROR';
+
 
 /**
  * Log Entry
@@ -44,7 +39,7 @@ export class LogService {
    */
   static registerDebugMethod(name: string, method: () => string | Promise<string>): void {
     this.debugMethods.set(name, { name, method });
-    this.log(LogLevel.DEBUG, `Debug method registered: ${name}`);
+    this.log('DEBUG', `Debug method registered: ${name}`);
   }
 
   /**
@@ -53,7 +48,7 @@ export class LogService {
    */
   static unregisterDebugMethod(name: string): void {
     if (this.debugMethods.delete(name)) {
-      this.log(LogLevel.DEBUG, `Debug method unregistered: ${name}`);
+      this.log('DEBUG', `Debug method unregistered: ${name}`);
     }
   }
 
@@ -79,7 +74,7 @@ export class LogService {
       return result;
     } catch (error) {
       const errorMsg = error instanceof Error ? error.message : String(error);
-      this.log(LogLevel.ERROR, `Failed to execute debug method: ${name}`, { error: errorMsg });
+      this.log('ERROR', `Failed to execute debug method: ${name}`, { error: errorMsg });
       throw error;
     }
   }
@@ -96,7 +91,7 @@ export class LogService {
       } catch (error) {
         const errorMsg = error instanceof Error ? error.message : String(error);
         results[name] = `ERROR: ${errorMsg}`;
-        this.log(LogLevel.ERROR, `Failed to execute debug method: ${name}`, { error: errorMsg });
+        this.log('ERROR', `Failed to execute debug method: ${name}`, { error: errorMsg });
       }
     }
 
@@ -128,16 +123,16 @@ export class LogService {
     // Also log to console
     const consoleMsg = `[${level}] ${message}`;
     switch (level) {
-      case LogLevel.DEBUG:
+      case 'DEBUG':
         console.debug(consoleMsg, data);
         break;
-      case LogLevel.INFO:
+      case 'INFO':
         console.info(consoleMsg, data);
         break;
-      case LogLevel.WARN:
+      case 'WARN':
         console.warn(consoleMsg, data);
         break;
-      case LogLevel.ERROR:
+      case 'ERROR':
         console.error(consoleMsg, data);
         break;
     }
@@ -147,19 +142,19 @@ export class LogService {
    * Convenience methods for different log levels
    */
   static debug(message: string, data?: any): void {
-    this.log(LogLevel.DEBUG, message, data);
+    this.log('DEBUG', message, data);
   }
 
   static info(message: string, data?: any): void {
-    this.log(LogLevel.INFO, message, data);
+    this.log('INFO', message, data);
   }
 
   static warn(message: string, data?: any): void {
-    this.log(LogLevel.WARN, message, data);
+    this.log('WARN', message, data);
   }
 
   static error(message: string, data?: any): void {
-    this.log(LogLevel.ERROR, message, data);
+    this.log('ERROR', message, data);
   }
 
   /**
@@ -279,10 +274,10 @@ export class LogService {
   static getLogStats(): Record<LogLevel, number> {
     const logs = this.getAllLogs();
     const stats: Record<LogLevel, number> = {
-      [LogLevel.DEBUG]: 0,
-      [LogLevel.INFO]: 0,
-      [LogLevel.WARN]: 0,
-      [LogLevel.ERROR]: 0,
+      ['DEBUG']: 0,
+      ['INFO']: 0,
+      ['WARN']: 0,
+      ['ERROR']: 0,
     };
 
     logs.forEach(log => {

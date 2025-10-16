@@ -4,6 +4,7 @@ import i18n from "./i18n/i18n.ts";
 import RegistryManagerPage from "./page/registrymanager/RegistryManagerPage.tsx";
 import ModManagerPage from "./page/modmanager/ModManagerPage.tsx";
 import LogManagerPage from "./page/logmanager/LogManagerPage.tsx";
+import ModalContainer from "./component/ModalContainer.tsx";
 
 type PageType = 'mod-manager' | 'registry-manager' | 'log-viewer' | 'modal-test' | null;
 
@@ -98,6 +99,9 @@ export default class App extends Component<{}, AppState> {
             </div>
           </div>
         )}
+
+        {/* Modal Container */}
+        <ModalContainer />
       </>
     )
   }

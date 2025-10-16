@@ -40,6 +40,13 @@ export class RegistryService {
         createdAt: Date.now(),
         updatedAt: Date.now(),
       }]
+      registries = [{
+        id: this.generateId(),
+        url: 'https://inkerbot.github.io/bc-mod-manager/manifest.json',
+        type: 'fusam',
+        createdAt: Date.now(),
+        updatedAt: Date.now(),
+      }]
       LocalStorageService.setItem(this.STORAGE_KEY, registries);
     }
     return registries;

@@ -56,6 +56,21 @@
       ]
     },
     {
+      "id": "Bondage-Club-Chaos",
+      "name": "Bondage Club Chaos (BCC)",
+      "description": " bondage-club-chaos",
+      "author": "neko_ziro",
+      "repository": "https://gitlab.com/FurryZoi/Bondage-Club-Chaos/",
+      "tags": ["cheats"],
+      "type": "module",
+      "versions": [
+        {
+          "distribution": "stable",
+          "source": "https://furryzoi.gitlab.io/Bondage-Club-Chaos/addon.js"
+        }
+      ]
+    },
+    {
       "id": "Liko_Tool",
       "icon": "https://raw.githubusercontent.com/awdrrawd/liko-tool-Image-storage/refs/heads/main/Images/LOGO_2.png",
       "name": "Liko的工具包 —— Liko's Tool Kit",

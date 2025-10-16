@@ -10,18 +10,37 @@ import {ModLoaderService} from "./service/ModLoaderService.ts";
 type PageType = 'mod-manager' | 'registry-manager' | 'log-viewer' | 'modal-test' | null;
 
 interface AppState {
+  showButton: boolean;
   menuOpen: boolean;
   currentPage: PageType;
 }
 
 export default class App extends Component<{}, AppState> {
+  private screenTimer: number | null = null;
+
   constructor(props: {}) {
     super(props);
     this.state = {
+      showButton: true,
       menuOpen: false,
       currentPage: null
     };
     window.bmm.app = this;
+  }
+
+  componentDidMount() {
+    this.screenTimer = window.setInterval(() => {
+      const targetState = typeof CurrentScreen == 'undefined' || CurrentScreen === "Preference" || CurrentScreen === "Login";
+      if (this.state.showButton !== targetState) {
+        this.setState({showButton: targetState});
+      }
+    }, 1000);
+  }
+
+  componentWillUnmount() {
+    if (this.screenTimer) {
+      clearInterval(this.screenTimer);
+    }
   }
 
   toggleMenu = () => {
@@ -55,7 +74,7 @@ export default class App extends Component<{}, AppState> {
     return (
       <>
         {/* Menu Button */}
-        <div className="fixed top-4 right-12 z-50">
+        {this.state.showButton && <div className="fixed top-4 right-12 z-50">
           <button
             className={`menu-button w-8 h-8 rounded-full bg-blue-800 text-white ${menuOpen ? 'open' : ''}`}
             onClick={this.toggleMenu}
@@ -83,7 +102,7 @@ export default class App extends Component<{}, AppState> {
               {i18n('button-log-viewer')}
             </button>
           </div>
-        </div>
+        </div>}
 
         {/* Page Modal/Overlay */}
         {currentPage && (

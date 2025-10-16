@@ -41,6 +41,21 @@
       ]
     },
     {
+      "id": "BC Color picker plus",
+      "name": "BC 颜色选择器 Plus",
+      "description": "悬浮按钮和弹窗都可以拖动",
+      "author": "Koephi",
+      "repository": "https://github.com/phinyxdayo/bc-color-picker-plus",
+      "tags": ["enhancements"],
+      "type": "script",
+      "versions": [
+        {
+          "distribution": "stable",
+          "source": "https://cdn.jsdelivr.net/gh/phinyxdayo/bc-color-picker-plus@main/Koephi%20-%20Color%20Picker.js"
+        }
+      ]
+    },
+    {
       "id": "Liko_Tool",
       "icon": "https://raw.githubusercontent.com/awdrrawd/liko-tool-Image-storage/refs/heads/main/Images/LOGO_2.png",
       "name": "Liko的工具包 —— Liko's Tool Kit",

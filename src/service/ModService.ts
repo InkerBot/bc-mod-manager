@@ -1,5 +1,6 @@
 import { LocalStorageService } from './LocalStorageService';
 import { RegistryDataService, type FusamAddon, type CachedRegistryData } from './RegistryDataService';
+import { ModLoaderService } from './ModLoaderService';
 
 /**
  * Mod Configuration
@@ -103,34 +104,6 @@ export class ModService {
   }
 
   /**
-   * Disable a mod
-   */
-  static disableMod(modId: string, registryId: string): boolean {
-    const config = this.getConfig(modId, registryId);
-    if (!config) return false;
-
-    this.saveConfig({
-      ...config,
-      enabled: false,
-    });
-    return true;
-  }
-
-  /**
-   * Toggle mod enabled state
-   */
-  static toggleMod(modId: string, registryId: string): boolean {
-    const config = this.getConfig(modId, registryId);
-    if (!config) return false;
-
-    this.saveConfig({
-      ...config,
-      enabled: !config.enabled,
-    });
-    return true;
-  }
-
-  /**
    * Change mod version
    */
   static changeVersion(modId: string, registryId: string, version: string): boolean {
@@ -149,6 +122,13 @@ export class ModService {
    */
   static removeConfig(modId: string, registryId: string): boolean {
     const configs = this.getAllConfigs();
+    const config = configs.find(c => c.modId === modId && c.registryId === registryId);
+
+    // Mark mod as disabled for refresh tracking if it was enabled
+    if (config && config.enabled) {
+      ModLoaderService.markModDisabled(modId, registryId);
+    }
+
     const filtered = configs.filter(
       c => !(c.modId === modId && c.registryId === registryId)
     );

@@ -1,0 +1,110 @@
+{
+  "button-mod-manager": "Mod Manager",
+  "button-registry-manager": "Registry Manager",
+  "button-log-viewer": "Log Viewer",
+  "button-close": "Close",
+
+  "title-mod-manager": "Mod Manager",
+  "label-total-mods": "Total Mods",
+  "label-enabled-mods": "Enabled",
+  "label-disabled-mods": "Disabled",
+  "label-repository": "Repository",
+  "label-website": "Website",
+  "label-discord": "Discord",
+  "label-type": "Type",
+  "label-registry": "Registry",
+  "label-selected-version": "Version",
+  "label-available-versions": "Available Versions",
+
+  "filter-all-mods": "All Mods",
+  "filter-enabled-only": "Enabled Only",
+  "filter-disabled-only": "Disabled Only",
+
+  "placeholder-search-mods": "Search mods by name, description, author, or tags...",
+
+  "button-remove-mod": "Remove",
+  "button-install-mod": "Install",
+  "button-join-discord": "Join Server",
+  "button-less": "Less",
+  "button-more": "More",
+
+  "no-mods-available": "No mods available",
+  "no-mods-available-detail": "Please add and fetch registries in the Registry Manager first.",
+  "no-mods-match-search": "No mods match your search criteria.",
+  "showing-x-of-y-mods": "Showing {x} of {y} mods",
+
+  "title-registry-manager": "Registry Manager",
+  "title-add-new-registry": "Add New Registry",
+  "title-registered-registries": "Registered Registries",
+
+  "placeholder-registry-url": "Enter registry URL (e.g., https://example.com/registry.json)",
+
+  "button-add": "Add",
+  "button-save": "Save",
+  "button-cancel": "Cancel",
+  "button-edit": "Edit",
+  "button-delete": "Delete",
+  "button-fetch": "Fetch",
+  "button-fetch-all": "Fetch All",
+  "button-fetching": "Fetching...",
+
+  "label-added": "Added",
+  "label-updated": "Updated",
+  "label-cached": "Cached",
+  "label-error": "Error",
+  "label-mod": "mod",
+  "label-mods": "mods",
+
+  "message-no-registries": "No registries added yet. Add your first registry above.",
+  "message-total-registries": "Total Registries: {count}",
+
+  "error-enter-url": "Please enter a URL",
+  "error-add-registry-failed": "Failed to add registry. Please check the URL is valid and not a duplicate.",
+  "error-update-registry-failed": "Failed to update registry. Please check the URL is valid and not a duplicate.",
+  "error-delete-registry-failed": "Failed to delete registry",
+  "error-fetch-registry-failed": "Failed to fetch registry: {error}",
+  "error-fetch-registries-failed": "Failed to fetch registries: {error}",
+  "error-no-registries-to-fetch": "No registries to fetch",
+
+  "confirm-delete-registry": "Are you sure you want to delete this registry?",
+
+  "registry-type-fusam": "Fusam",
+  "registry-type-aurora": "Aurora",
+
+  "title-fetch-registry": "Fetch registry data",
+  "title-edit-registry": "Edit",
+  "title-delete-registry": "Delete",
+
+  "title-log-manager": "Log Manager",
+  "subtitle-log-manager": "View application logs and download crash reports",
+
+  "label-total-logs": "Total Logs",
+  "label-debug": "Debug",
+  "label-info": "Info",
+  "label-warnings": "Warnings",
+  "label-errors": "Errors",
+  "label-filter": "Filter",
+  "label-installed": "Installed",
+  "label-auto-refresh": "Auto Refresh",
+  "label-logs-count": "Logs ({count})",
+  "label-registered-debug-methods": "Registered Debug Methods ({count})",
+
+  "filter-all-levels": "All Levels",
+  "filter-debug": "Debug",
+  "filter-info": "Info",
+  "filter-warnings": "Warnings",
+  "filter-errors": "Errors",
+
+  "placeholder-search-logs": "Search logs...",
+
+  "button-refresh": "Refresh",
+  "button-download-crash-report": "Download Crash Report",
+  "button-downloading": "Downloading...",
+  "button-clear-logs": "Clear Logs",
+
+  "message-no-logs-found": "No logs found",
+  "message-adjust-filters": "Try adjusting your filters",
+  "message-logs-will-appear": "Logs will appear here as the application runs",
+
+  "confirm-clear-logs": "Are you sure you want to clear all logs?"
+}

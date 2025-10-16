@@ -1,4 +1,6 @@
 import { LocalStorageService } from './LocalStorageService';
+import {LogService} from "./LogService.ts";
+import {RegistryDataService} from "./RegistryDataService.ts";
 
 /**
  * Registry type options
@@ -33,7 +35,7 @@ export class RegistryService {
     if (registries == null) {
       registries = [{
         id: this.generateId(),
-        url: 'https://gitlab.com/Sidiousious/bc-addon-loader/-/raw/main/manifest.json',
+        url: 'https://sidiousious.gitlab.io/bc-addon-loader/manifest.json',
         type: 'fusam',
         createdAt: Date.now(),
         updatedAt: Date.now(),
@@ -61,7 +63,7 @@ export class RegistryService {
    */
   static add(url: string, type: RegistryType = 'fusam'): Registry | null {
     if (!this.isValidUrl(url)) {
-      console.error('Invalid URL format');
+      LogService.error('Invalid URL format');
       return null;
     }
 
@@ -69,7 +71,7 @@ export class RegistryService {
 
     // Check for duplicate URLs
     if (registries.some(r => r.url === url)) {
-      console.error('Registry URL already exists');
+      LogService.error('Registry URL already exists');
       return null;
     }
 
@@ -84,6 +86,10 @@ export class RegistryService {
 
     registries.push(newRegistry);
     LocalStorageService.setItem(this.STORAGE_KEY, registries);
+    RegistryDataService.fetchRegistry(newRegistry)
+      .catch(error => {
+        LogService.error('Error fetching registry:', error);
+      });
     return newRegistry;
   }
 
@@ -96,7 +102,7 @@ export class RegistryService {
    */
   static update(id: string, url: string, type?: RegistryType): Registry | null {
     if (!this.isValidUrl(url)) {
-      console.error('Invalid URL format');
+      LogService.error('Invalid URL format');
       return null;
     }
 
@@ -104,13 +110,13 @@ export class RegistryService {
     const index = registries.findIndex(r => r.id === id);
 
     if (index === -1) {
-      console.error('Registry not found');
+      LogService.error('Registry not found');
       return null;
     }
 
     // Check for duplicate URLs (excluding current registry)
     if (registries.some(r => r.id !== id && r.url === url)) {
-      console.error('Registry URL already exists');
+      LogService.error('Registry URL already exists');
       return null;
     }
 
@@ -121,6 +127,12 @@ export class RegistryService {
     registries[index].updatedAt = Date.now();
 
     LocalStorageService.setItem(this.STORAGE_KEY, registries);
+
+    RegistryDataService.fetchRegistry(registries[index])
+      .catch(error => {
+        LogService.error('Error fetching registry:', error);
+      });
+
     return registries[index];
   }
 
@@ -134,7 +146,7 @@ export class RegistryService {
     const filteredRegistries = registries.filter(r => r.id !== id);
 
     if (filteredRegistries.length === registries.length) {
-      console.error('Registry not found');
+      LogService.error('Registry not found');
       return false;
     }
 

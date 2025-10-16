@@ -1,0 +1,111 @@
+{
+  "button-mod-manager": "模组管理器",
+  "button-registry-manager": "注册表管理器",
+  "button-log-viewer": "日志查看器",
+  "button-close": "关闭",
+
+  "title-mod-manager": "模组管理器",
+  "label-total-mods": "模组总数",
+  "label-enabled-mods": "已启用",
+  "label-disabled-mods": "已禁用",
+  "label-repository": "代码仓库",
+  "label-website": "网站",
+  "label-discord": "Discord",
+  "label-type": "类型",
+  "label-registry": "注册表",
+  "label-selected-version": "版本",
+  "label-available-versions": "可用版本",
+
+  "filter-all-mods": "全部模组",
+  "filter-enabled-only": "仅已启用",
+  "filter-disabled-only": "仅已禁用",
+
+  "placeholder-search-mods": "按名称、描述、作者或标签搜索模组...",
+
+  "button-remove-mod": "移除",
+  "button-install-mod": "安装",
+  "button-join-discord": "加入服务器",
+  "button-less": "收起",
+  "button-more": "展开",
+
+  "no-mods-available": "暂无可用模组",
+  "no-mods-available-detail": "请先在注册表管理器中添加并获取注册表。",
+  "no-mods-match-search": "没有符合搜索条件的模组。",
+  "showing-x-of-y-mods": "显示 {x} / {y} 个模组",
+
+  "title-registry-manager": "注册表管理器",
+  "title-add-new-registry": "添加新注册表",
+  "title-registered-registries": "已注册的注册表",
+
+  "placeholder-registry-url": "输入注册表 URL（例如：https://example.com/registry.json）",
+
+  "button-add": "添加",
+  "button-save": "保存",
+  "button-cancel": "取消",
+  "button-edit": "编辑",
+  "button-delete": "删除",
+  "button-fetch": "获取",
+  "button-fetch-all": "获取全部",
+  "button-fetching": "获取中...",
+
+  "label-added": "添加时间",
+  "label-updated": "更新时间",
+  "label-cached": "缓存时间",
+  "label-error": "错误",
+  "label-mod": "个模组",
+  "label-mods": "个模组",
+
+  "message-no-registries": "尚未添加注册表。请在上方添加您的第一个注册表。",
+  "message-total-registries": "注册表总数：{count}",
+
+  "error-enter-url": "请输入 URL",
+  "error-add-registry-failed": "添加注册表失败。请检查 URL 是否有效且未重复。",
+  "error-update-registry-failed": "更新注册表失败。请检查 URL 是否有效且未重复。",
+  "error-delete-registry-failed": "删除注册表失败",
+  "error-fetch-registry-failed": "获取注册表失败：{error}",
+  "error-fetch-registries-failed": "获取注册表失败：{error}",
+  "error-no-registries-to-fetch": "没有可获取的注册表",
+
+  "confirm-delete-registry": "确定要删除此注册表吗？",
+
+  "registry-type-fusam": "Fusam",
+  "registry-type-aurora": "Aurora",
+
+  "title-fetch-registry": "获取注册表数据",
+  "title-edit-registry": "编辑",
+  "title-delete-registry": "删除",
+
+  "title-log-manager": "日志管理器",
+  "subtitle-log-manager": "查看应用程序日志并下载崩溃报告",
+
+  "label-total-logs": "日志总数",
+  "label-debug": "调试",
+  "label-info": "信息",
+  "label-warnings": "警告",
+  "label-errors": "错误",
+  "label-filter": "筛选",
+  "label-installed": "已安装",
+  "label-auto-refresh": "自动刷新",
+  "label-logs-count": "日志（{count}）",
+  "label-registered-debug-methods": "已注册的调试方法（{count}）",
+
+  "filter-all-levels": "全部级别",
+  "filter-debug": "调试",
+  "filter-info": "信息",
+  "filter-warnings": "警告",
+  "filter-errors": "错误",
+
+  "placeholder-search-logs": "搜索日志...",
+
+  "button-refresh": "刷新",
+  "button-download-crash-report": "下载崩溃报告",
+  "button-downloading": "下载中...",
+  "button-clear-logs": "清空日志",
+
+  "message-no-logs-found": "未找到日志",
+  "message-adjust-filters": "尝试调整筛选条件",
+  "message-logs-will-appear": "应用程序运行时日志将显示在此处",
+
+  "confirm-clear-logs": "确定要清空所有日志吗？"
+}
+

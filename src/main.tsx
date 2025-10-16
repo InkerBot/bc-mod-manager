@@ -1,12 +1,28 @@
 import { render } from 'preact'
 import './index.css'
+import './fusam.ts'
+import './bcmodsdk.js'
 import App from './app.tsx'
 import {LogService} from "./service/LogService.ts";
 import {ModService} from "./service/ModService.ts";
 import {RegistryService} from "./service/RegistryService.ts";
 import {RegistryDataService} from "./service/RegistryDataService.ts";
+import {ModLoaderService} from "./service/ModLoaderService.ts";
 
 LogService.info('BC Mod Manager started');
+
+// fetch all registries and cache data
+RegistryDataService.fetchAllRegistries(RegistryService.getAll())
+  .then(() => {
+    LogService.info('Registry data fetched and cached');
+  })
+  .catch(error => {
+    LogService.error('Error fetching registry data:', error);
+  });
+
+// Initialize mod loader to preload enabled mods
+ModLoaderService.initialize();
+ModLoaderService.preloadAllEnabledMods();
 
 // System Information
 LogService.registerDebugMethod('System Information', () => {
@@ -76,8 +92,25 @@ ${items.map(item => `- ${item.key}: ${(item.size / 1024).toFixed(2)} KB`).join('
     `.trim();
 });
 
+// Mod Loader Status
+LogService.registerDebugMethod('Mod Loader Status', () => {
+  const stats = ModLoaderService.getStats();
+  const loadedMods = ModLoaderService.getLoadedMods();
+
+  return `
+Loaded Mods: ${stats.loadedCount}
+Enabled Mods: ${stats.enabledCount}
+Has Disabled Mods (Refresh Pending): ${stats.hasDisabledMods}
+
+Loaded Mod Keys:
+${loadedMods.length > 0 ? loadedMods.map(key => `- ${key}`).join('\n') : '(none)'}
+    `.trim();
+});
+
 LogService.debug('Debug methods registered', {
   count: LogService.getDebugMethods().length
 });
 
 render(<App />, window.bmm.root);
+
+ModLoaderService.loadAllEnabledMods();

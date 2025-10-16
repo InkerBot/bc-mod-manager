@@ -1,6 +1,7 @@
 import {Component} from "preact";
 import {ModService, type ModConfig} from "../../service/ModService";
 import {type FusamAddon} from "../../service/RegistryDataService";
+import i18n from "../../i18n/i18n.ts";
 
 interface ModManagerState {
   availableMods: Array<{
@@ -149,7 +150,7 @@ export default class ModManagerPage extends Component<{}, ModManagerState> {
 
     return (
       <div className="p-6 max-w-6xl mx-auto">
-        <h1 className="text-3xl font-bold mb-6 text-blue-600">Mod Manager</h1>
+        <h1 className="text-3xl font-bold mb-6 text-blue-600">{i18n('title-mod-manager')}</h1>
 
         {/* Error Message */}
         {error && (
@@ -162,15 +163,15 @@ export default class ModManagerPage extends Component<{}, ModManagerState> {
         <div className="mb-6 p-4 bg-blue-50 border border-blue-200 rounded-lg flex items-center justify-between">
           <div className="flex gap-6">
             <div>
-              <span className="text-sm text-gray-600">Total Mods:</span>
+              <span className="text-sm text-gray-600">{i18n('label-total-mods')}:</span>
               <span className="ml-2 text-lg font-bold text-blue-700">{totalCount}</span>
             </div>
             <div>
-              <span className="text-sm text-gray-600">Enabled:</span>
+              <span className="text-sm text-gray-600">{i18n('label-enabled-mods')}:</span>
               <span className="ml-2 text-lg font-bold text-green-600">{enabledCount}</span>
             </div>
             <div>
-              <span className="text-sm text-gray-600">Disabled:</span>
+              <span className="text-sm text-gray-600">{i18n('label-disabled-mods')}:</span>
               <span className="ml-2 text-lg font-bold text-gray-600">{totalCount - enabledCount}</span>
             </div>
           </div>
@@ -182,7 +183,7 @@ export default class ModManagerPage extends Component<{}, ModManagerState> {
             <div className="flex-1">
               <input
                 type="text"
-                placeholder="Search mods by name, description, author, or tags..."
+                placeholder={i18n('placeholder-search-mods')}
                 value={this.state.searchQuery}
                 onInput={this.handleSearchChange}
                 className="w-full px-4 py-2 border border-blue-300 rounded focus:outline-none focus:ring-2 focus:ring-blue-500 text-gray-900"
@@ -193,9 +194,9 @@ export default class ModManagerPage extends Component<{}, ModManagerState> {
               onChange={this.handleFilterChange}
               className="px-4 py-2 border border-blue-300 rounded focus:outline-none focus:ring-2 focus:ring-blue-500 text-gray-900 bg-white"
             >
-              <option value="all">All Mods</option>
-              <option value="enabled">Enabled Only</option>
-              <option value="disabled">Disabled Only</option>
+              <option value="all">{i18n('filter-all-mods')}</option>
+              <option value="enabled">{i18n('filter-enabled-only')}</option>
+              <option value="disabled">{i18n('filter-disabled-only')}</option>
             </select>
           </div>
         </div>
@@ -206,11 +207,11 @@ export default class ModManagerPage extends Component<{}, ModManagerState> {
             <div className="p-8 text-center text-gray-500">
               {totalCount === 0 ? (
                 <>
-                  <p className="mb-2">No mods available.</p>
-                  <p className="text-sm">Please add and fetch registries in the Registry Manager first.</p>
+                  <p className="mb-2">{i18n('no-mods-available')}</p>
+                  <p className="text-sm">{i18n('no-mods-available-detail')}</p>
                 </>
               ) : (
-                <p>No mods match your search criteria.</p>
+                <p>{i18n('no-mods-match-search')}</p>
               )}
             </div>
           ) : (
@@ -276,14 +277,14 @@ export default class ModManagerPage extends Component<{}, ModManagerState> {
                           {/* Status Badge */}
                           {isEnabled && (
                             <span className="px-3 py-1 text-sm font-medium bg-green-100 text-green-700 rounded">
-                              ✓ Installed
+                              ✓ {i18n('label-installed')}
                             </span>
                           )}
 
                           {/* Version Selector - Always show if versions available */}
                           {mod.addon.versions.length > 0 && (
                             <div className="flex items-center gap-2">
-                              <span className="text-sm text-gray-600">Version:</span>
+                              <span className="text-sm text-gray-600">{i18n('label-selected-version')}:</span>
                               <select
                                 value={selectedVersion}
                                 onChange={(e) => this.handleVersionChange(
@@ -308,7 +309,7 @@ export default class ModManagerPage extends Component<{}, ModManagerState> {
                             onClick={() => this.toggleExpanded(uniqueId)}
                             className="text-sm text-blue-600 hover:text-blue-800 font-medium"
                           >
-                            {isExpanded ? '▼ Less' : '▶ More'}
+                            {isExpanded ? ('▼ ' + i18n('button-less')) : ('▶ ' + i18n('button-more'))}
                           </button>
 
                           {/* Install/Remove Button */}
@@ -319,7 +320,7 @@ export default class ModManagerPage extends Component<{}, ModManagerState> {
                                 className="px-4 py-1.5 text-sm bg-red-500 text-white rounded hover:bg-red-600 transition-colors font-medium"
                                 title="Remove this mod"
                               >
-                                Remove
+                                {i18n('button-remove-mod')}
                               </button>
                             ) : (
                               <button
@@ -327,7 +328,7 @@ export default class ModManagerPage extends Component<{}, ModManagerState> {
                                 className="px-4 py-1.5 text-sm bg-blue-500 text-white rounded hover:bg-blue-600 transition-colors font-medium"
                                 title="Install this mod"
                               >
-                                Install
+                                {i18n('button-install-mod')}
                               </button>
                             )}
                           </div>
@@ -339,7 +340,7 @@ export default class ModManagerPage extends Component<{}, ModManagerState> {
                             <div className="grid grid-cols-1 md:grid-cols-2 gap-4 text-sm">
                               {mod.addon.repository && (
                                 <div>
-                                  <span className="font-semibold text-gray-700">Repository:</span>
+                                  <span className="font-semibold text-gray-700">{i18n('label-repository')}:</span>
                                   <a
                                     href={mod.addon.repository}
                                     target="_blank"
@@ -352,7 +353,7 @@ export default class ModManagerPage extends Component<{}, ModManagerState> {
                               )}
                               {mod.addon.website && (
                                 <div>
-                                  <span className="font-semibold text-gray-700">Website:</span>
+                                  <span className="font-semibold text-gray-700">{i18n('label-website')}:</span>
                                   <a
                                     href={mod.addon.website}
                                     target="_blank"
@@ -365,30 +366,30 @@ export default class ModManagerPage extends Component<{}, ModManagerState> {
                               )}
                               {mod.addon.discord && (
                                 <div>
-                                  <span className="font-semibold text-gray-700">Discord:</span>
+                                  <span className="font-semibold text-gray-700">{i18n('label-discord')}:</span>
                                   <a
                                     href={mod.addon.discord}
                                     target="_blank"
                                     rel="noopener noreferrer"
                                     className="ml-2 text-blue-600 hover:underline"
                                   >
-                                    Join Server
+                                    {i18n('button-join-discord')}
                                   </a>
                                 </div>
                               )}
                               {mod.addon.type && (
                                 <div>
-                                  <span className="font-semibold text-gray-700">Type:</span>
+                                  <span className="font-semibold text-gray-700">{i18n('label-type')}:</span>
                                   <span className="ml-2 text-gray-600">{mod.addon.type}</span>
                                 </div>
                               )}
                               <div>
-                                <span className="font-semibold text-gray-700">Registry:</span>
+                                <span className="font-semibold text-gray-700">{i18n('label-registry')}:</span>
                                 <span className="ml-2 text-gray-600 text-xs break-all">{mod.registryUrl}</span>
                               </div>
                               {mod.addon.versions.length > 0 && (
                                 <div className="md:col-span-2">
-                                  <span className="font-semibold text-gray-700">Available Versions:</span>
+                                  <span className="font-semibold text-gray-700">{i18n('label-available-versions')}:</span>
                                   <div className="mt-1 flex gap-2 flex-wrap">
                                     {mod.addon.versions.map(v => (
                                       <span
@@ -420,7 +421,7 @@ export default class ModManagerPage extends Component<{}, ModManagerState> {
         {/* Footer Info */}
         {filteredMods.length > 0 && (
           <div className="mt-4 text-sm text-gray-600 text-center">
-            Showing {filteredMods.length} of {totalCount} mods
+            {i18n('showing-x-of-y-mods', {x: filteredMods.length, y: totalCount})}
           </div>
         )}
       </div>

@@ -1,6 +1,7 @@
 import {Component} from "preact";
 import {type Registry, type RegistryType, RegistryService} from "../../service/RegistryService";
 import {type CachedRegistryData, RegistryDataService} from "../../service/RegistryDataService";
+import i18n from "../../i18n/i18n";
 
 interface RegistryManagerState {
   registries: Registry[];
@@ -74,7 +75,7 @@ export default class RegistryManagerPage extends Component<{}, RegistryManagerSt
     const { newUrl, newType } = this.state;
 
     if (!newUrl.trim()) {
-      this.setState({ error: 'Please enter a URL' });
+      this.setState({ error: i18n('error-enter-url') });
       return;
     }
 
@@ -88,7 +89,7 @@ export default class RegistryManagerPage extends Component<{}, RegistryManagerSt
       });
       this.loadRegistries();
     } else {
-      this.setState({ error: 'Failed to add registry. Please check the URL is valid and not a duplicate.' });
+      this.setState({ error: i18n('error-add-registry-failed') });
     }
   };
 
@@ -107,7 +108,7 @@ export default class RegistryManagerPage extends Component<{}, RegistryManagerSt
     if (!editingId) return;
 
     if (!editingUrl.trim()) {
-      this.setState({ error: 'Please enter a URL' });
+      this.setState({ error: i18n('error-enter-url') });
       return;
     }
 
@@ -122,7 +123,7 @@ export default class RegistryManagerPage extends Component<{}, RegistryManagerSt
       });
       this.loadRegistries();
     } else {
-      this.setState({ error: 'Failed to update registry. Please check the URL is valid and not a duplicate.' });
+      this.setState({ error: i18n('error-update-registry-failed') });
     }
   };
 
@@ -136,7 +137,7 @@ export default class RegistryManagerPage extends Component<{}, RegistryManagerSt
   };
 
   handleDelete = (id: string) => {
-    if (confirm('Are you sure you want to delete this registry?')) {
+    if (confirm(i18n('confirm-delete-registry'))) {
       const success = RegistryService.delete(id);
 
       if (success) {
@@ -145,7 +146,7 @@ export default class RegistryManagerPage extends Component<{}, RegistryManagerSt
         this.loadRegistries();
         this.loadCachedData();
       } else {
-        this.setState({ error: 'Failed to delete registry' });
+        this.setState({ error: i18n('error-delete-registry-failed') });
       }
     }
   };
@@ -173,14 +174,14 @@ export default class RegistryManagerPage extends Component<{}, RegistryManagerSt
       this.setState({ fetchingIds: new Set(fetchingIds) });
 
       if (cachedData.error) {
-        this.setState({ error: `Failed to fetch registry: ${cachedData.error}` });
+        this.setState({ error: i18n('error-fetch-registry-failed', { error: cachedData.error }) });
       }
     } catch (error) {
       console.error('Error fetching registry:', error);
       fetchingIds.delete(registry.id);
       this.setState({
         fetchingIds: new Set(fetchingIds),
-        error: `Failed to fetch registry: ${error instanceof Error ? error.message : 'Unknown error'}`
+        error: i18n('error-fetch-registry-failed', { error: error instanceof Error ? error.message : 'Unknown error' })
       });
     }
   };
@@ -189,7 +190,7 @@ export default class RegistryManagerPage extends Component<{}, RegistryManagerSt
     const { registries } = this.state;
 
     if (registries.length === 0) {
-      this.setState({ error: 'No registries to fetch' });
+      this.setState({ error: i18n('error-no-registries-to-fetch') });
       return;
     }
 
@@ -209,7 +210,7 @@ export default class RegistryManagerPage extends Component<{}, RegistryManagerSt
       console.error('Error fetching registries:', error);
       this.setState({
         fetchingIds: new Set(),
-        error: `Failed to fetch registries: ${error instanceof Error ? error.message : 'Unknown error'}`
+        error: i18n('error-fetch-registries-failed', { error: error instanceof Error ? error.message : 'Unknown error' })
       });
     }
   };
@@ -219,7 +220,7 @@ export default class RegistryManagerPage extends Component<{}, RegistryManagerSt
 
     return (
       <div className="p-6 max-w-4xl mx-auto">
-        <h1 className="text-3xl font-bold mb-6 text-blue-600">Registry Manager</h1>
+        <h1 className="text-3xl font-bold mb-6 text-blue-600">{i18n('title-registry-manager')}</h1>
 
         {/* Error Message */}
         {error && (
@@ -230,13 +231,13 @@ export default class RegistryManagerPage extends Component<{}, RegistryManagerSt
 
         {/* Add New Registry */}
         <div className="mb-6 p-4 bg-blue-50 border border-blue-200 rounded-lg">
-          <h2 className="text-xl font-semibold mb-3 text-blue-700">Add New Registry</h2>
+          <h2 className="text-xl font-semibold mb-3 text-blue-700">{i18n('title-add-new-registry')}</h2>
           <div className="flex gap-2">
             <input
               type="text"
               value={newUrl}
               onInput={this.handleNewUrlChange}
-              placeholder="Enter registry URL (e.g., https://example.com/registry.json)"
+              placeholder={i18n('placeholder-registry-url')}
               className="flex-1 px-3 py-2 border border-blue-300 rounded focus:outline-none focus:ring-2 focus:ring-blue-500 text-gray-900"
             />
             <select
@@ -244,14 +245,14 @@ export default class RegistryManagerPage extends Component<{}, RegistryManagerSt
               onChange={this.handleNewTypeChange}
               className="px-3 py-2 border border-blue-300 rounded focus:outline-none focus:ring-2 focus:ring-blue-500 text-gray-900 bg-white"
             >
-              <option value="fusam">Fusam</option>
-              <option value="aurora">Aurora</option>
+              <option value="fusam">{i18n('registry-type-fusam')}</option>
+              <option value="aurora">{i18n('registry-type-aurora')}</option>
             </select>
             <button
               onClick={this.handleAdd}
               className="px-6 py-2 bg-blue-600 text-white rounded hover:bg-blue-700 transition-colors font-medium"
             >
-              Add
+              {i18n('button-add')}
             </button>
           </div>
         </div>
@@ -259,22 +260,22 @@ export default class RegistryManagerPage extends Component<{}, RegistryManagerSt
         {/* Registry List */}
         <div className="bg-white border border-blue-200 rounded-lg overflow-hidden">
           <div className="flex items-center justify-between p-4 bg-blue-100">
-            <h2 className="text-xl font-semibold text-blue-800">Registered Registries</h2>
+            <h2 className="text-xl font-semibold text-blue-800">{i18n('title-registered-registries')}</h2>
             <button
               onClick={this.handleFetchAllRegistries}
               disabled={registries.length === 0 || fetchingIds.size > 0}
               className="px-4 py-2 bg-green-600 text-white rounded hover:bg-green-700 transition-colors font-medium disabled:bg-gray-400 disabled:cursor-not-allowed flex items-center gap-2"
-              title="Fetch all registries"
+              title={i18n('button-fetch-all')}
             >
               {fetchingIds.size > 0 ? (
                 <>
                   <span className="inline-block animate-spin">⟳</span>
-                  Fetching...
+                  {i18n('button-fetching')}
                 </>
               ) : (
                 <>
                   <span>↻</span>
-                  Fetch All
+                  {i18n('button-fetch-all')}
                 </>
               )}
             </button>
@@ -282,7 +283,7 @@ export default class RegistryManagerPage extends Component<{}, RegistryManagerSt
 
           {registries.length === 0 ? (
             <div className="p-8 text-center text-gray-500">
-              No registries added yet. Add your first registry above.
+              {i18n('message-no-registries')}
             </div>
           ) : (
             <div className="divide-y divide-blue-100">
@@ -302,20 +303,20 @@ export default class RegistryManagerPage extends Component<{}, RegistryManagerSt
                         onChange={this.handleEditTypeChange}
                         className="px-3 py-2 border border-blue-300 rounded focus:outline-none focus:ring-2 focus:ring-blue-500 text-gray-900 bg-white"
                       >
-                        <option value="fusam">Fusam</option>
-                        <option value="aurora">Aurora</option>
+                        <option value="fusam">{i18n('registry-type-fusam')}</option>
+                        <option value="aurora">{i18n('registry-type-aurora')}</option>
                       </select>
                       <button
                         onClick={this.handleSaveEdit}
                         className="px-4 py-2 bg-blue-600 text-white rounded hover:bg-blue-700 transition-colors"
                       >
-                        Save
+                        {i18n('button-save')}
                       </button>
                       <button
                         onClick={this.handleCancelEdit}
                         className="px-4 py-2 bg-gray-400 text-white rounded hover:bg-gray-500 transition-colors"
                       >
-                        Cancel
+                        {i18n('button-cancel')}
                       </button>
                     </div>
                   ) : (
@@ -333,10 +334,10 @@ export default class RegistryManagerPage extends Component<{}, RegistryManagerSt
                           </span>
                         </div>
                         <div className="text-xs text-gray-500 mt-1">
-                          Added: {new Date(registry.createdAt).toLocaleString()}
+                          {i18n('label-added')}: {new Date(registry.createdAt).toLocaleString()}
                           {registry.updatedAt !== registry.createdAt && (
                             <span className="ml-2">
-                              | Updated: {new Date(registry.updatedAt).toLocaleString()}
+                              | {i18n('label-updated')}: {new Date(registry.updatedAt).toLocaleString()}
                             </span>
                           )}
                         </div>
@@ -350,15 +351,15 @@ export default class RegistryManagerPage extends Component<{}, RegistryManagerSt
                                 <div className="flex items-center gap-4 text-xs">
                                   {cached.error ? (
                                     <span className="text-red-600 font-medium">
-                                      ❌ Error: {cached.error}
+                                      ❌ {i18n('label-error')}: {cached.error}
                                     </span>
                                   ) : (
                                     <>
                                       <span className="text-green-600 font-medium">
-                                        ✓ {cached.modCount} mod{cached.modCount !== 1 ? 's' : ''}
+                                        ✓ {cached.modCount} {cached.modCount !== 1 ? i18n('label-mods') : i18n('label-mod')}
                                       </span>
                                       <span className="text-gray-600">
-                                        Cached: {RegistryDataService.formatCacheAge(cached)}
+                                        {i18n('label-cached')}: {RegistryDataService.formatCacheAge(cached)}
                                       </span>
                                       <span className="text-gray-500">
                                         ({new Date(cached.fetchedAt).toLocaleString()})
@@ -377,17 +378,17 @@ export default class RegistryManagerPage extends Component<{}, RegistryManagerSt
                           onClick={() => this.handleFetchRegistry(registry)}
                           disabled={fetchingIds.has(registry.id)}
                           className="px-4 py-2 bg-green-500 text-white rounded hover:bg-green-600 transition-colors text-sm disabled:bg-gray-400 disabled:cursor-not-allowed flex items-center justify-center gap-1"
-                          title="Fetch registry data"
+                          title={i18n('title-fetch-registry')}
                         >
                           {fetchingIds.has(registry.id) ? (
                             <>
                               <span className="inline-block animate-spin">⟳</span>
-                              Fetching...
+                              {i18n('button-fetching')}
                             </>
                           ) : (
                             <>
                               <span>↻</span>
-                              Fetch
+                              {i18n('button-fetch')}
                             </>
                           )}
                         </button>
@@ -395,16 +396,16 @@ export default class RegistryManagerPage extends Component<{}, RegistryManagerSt
                           <button
                             onClick={() => this.handleEdit(registry)}
                             className="px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-600 transition-colors text-sm"
-                            title="Edit"
+                            title={i18n('title-edit-registry')}
                           >
-                            Edit
+                            {i18n('button-edit')}
                           </button>
                           <button
                             onClick={() => this.handleDelete(registry.id)}
                             className="px-4 py-2 bg-red-500 text-white rounded hover:bg-red-600 transition-colors text-sm"
-                            title="Delete"
+                            title={i18n('title-delete-registry')}
                           >
-                            Delete
+                            {i18n('button-delete')}
                           </button>
                         </div>
                       </div>
@@ -419,7 +420,7 @@ export default class RegistryManagerPage extends Component<{}, RegistryManagerSt
         {/* Registry Count */}
         {registries.length > 0 && (
           <div className="mt-4 text-sm text-gray-600 text-center">
-            Total Registries: {registries.length}
+            {i18n('message-total-registries', { count: registries.length.toString() })}
           </div>
         )}
       </div>

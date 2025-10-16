@@ -1,5 +1,6 @@
 import { LocalStorageService } from './LocalStorageService';
 import type { Registry, RegistryType } from './RegistryService';
+import {LogService} from "./LogService.ts";
 
 /**
  * Fusam Registry Data Structure
@@ -76,10 +77,10 @@ export class RegistryDataService {
    */
   static async fetchRegistry(registry: Registry): Promise<CachedRegistryData> {
     const startTime = Date.now();
-    
+
     try {
-      console.log(`Fetching registry data from: ${registry.url}`);
-      
+      LogService.info(`Fetching registry data from: ${registry.url}`);
+
       const response = await fetch(registry.url, {
         method: 'GET',
         headers: {
@@ -93,7 +94,7 @@ export class RegistryDataService {
       }
 
       const data = await response.json();
-      
+
       // Parse based on registry type
       let modCount = 0;
       let parsedData: FusamRegistryData | AuroraRegistryData | null = null;
@@ -120,12 +121,12 @@ export class RegistryDataService {
       // Save to cache
       this.saveToCache(cachedData);
 
-      console.log(`Successfully fetched ${modCount} mods in ${Date.now() - startTime}ms`);
-      
+      LogService.info(`Successfully fetched ${modCount} mods in ${Date.now() - startTime}ms`);
+
       return cachedData;
     } catch (error) {
-      console.error('Error fetching registry:', error);
-      
+      LogService.error('Error fetching registry:', error);
+
       const cachedData: CachedRegistryData = {
         registryId: registry.id,
         registryUrl: registry.url,
@@ -138,7 +139,7 @@ export class RegistryDataService {
 
       // Save error to cache
       this.saveToCache(cachedData);
-      
+
       return cachedData;
     }
   }

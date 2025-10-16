@@ -5,6 +5,7 @@ import RegistryManagerPage from "./page/registrymanager/RegistryManagerPage.tsx"
 import ModManagerPage from "./page/modmanager/ModManagerPage.tsx";
 import LogManagerPage from "./page/logmanager/LogManagerPage.tsx";
 import ModalContainer from "./component/ModalContainer.tsx";
+import {ModLoaderService} from "./service/ModLoaderService.ts";
 
 type PageType = 'mod-manager' | 'registry-manager' | 'log-viewer' | 'modal-test' | null;
 
@@ -20,6 +21,7 @@ export default class App extends Component<{}, AppState> {
       menuOpen: false,
       currentPage: null
     };
+    window.bmm.app = this;
   }
 
   toggleMenu = () => {
@@ -38,7 +40,13 @@ export default class App extends Component<{}, AppState> {
   }
 
   closePage = () => {
+    const wasModManager = this.state.currentPage === 'mod-manager';
     this.setState({currentPage: null});
+
+    // If closing mod manager, check if we need to refresh
+    if (wasModManager) {
+      ModLoaderService.refreshIfNeeded();
+    }
   }
 
   render() {
@@ -85,7 +93,7 @@ export default class App extends Component<{}, AppState> {
               <button
                 onClick={this.closePage}
                 className="sticky top-4 float-right mr-4 mt-4 w-10 h-10 bg-red-500 text-white rounded-full hover:bg-red-600 transition-colors z-50 flex items-center justify-center text-2xl font-bold"
-                title="Close"
+                title={i18n('button-close')}
               >
                 ×
               </button>

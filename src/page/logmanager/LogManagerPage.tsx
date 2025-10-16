@@ -1,5 +1,6 @@
 import { Component } from "preact";
 import { LogService, LogLevel, type LogEntry } from "../../service/LogService";
+import i18n from "../../i18n/i18n";
 
 interface LogManagerState {
   logs: LogEntry[];
@@ -72,7 +73,7 @@ export default class LogManagerPage extends Component<{}, LogManagerState> {
   };
 
   handleClearLogs = () => {
-    if (confirm('Are you sure you want to clear all logs?')) {
+    if (confirm(i18n('confirm-clear-logs'))) {
       LogService.clearLogs();
       this.loadLogs();
     }
@@ -144,31 +145,31 @@ export default class LogManagerPage extends Component<{}, LogManagerState> {
       <div className="p-6 max-w-7xl mx-auto">
         {/* Header */}
         <div className="mb-6">
-          <h1 className="text-3xl font-bold text-blue-600 mb-2">Log Manager</h1>
-          <p className="text-gray-600">View application logs and download crash reports</p>
+          <h1 className="text-3xl font-bold text-blue-600 mb-2">{i18n('title-log-manager')}</h1>
+          <p className="text-gray-600">{i18n('subtitle-log-manager')}</p>
         </div>
 
         {/* Stats */}
         <div className="grid grid-cols-2 md:grid-cols-5 gap-4 mb-6">
           <div className="bg-white p-4 rounded-lg shadow border border-blue-100">
             <div className="text-2xl font-bold text-blue-600">{this.state.logs.length}</div>
-            <div className="text-sm text-gray-600">Total Logs</div>
+            <div className="text-sm text-gray-600">{i18n('label-total-logs')}</div>
           </div>
           <div className="bg-gray-50 p-4 rounded-lg shadow border border-gray-200">
             <div className="text-2xl font-bold text-gray-700">{stats[LogLevel.DEBUG]}</div>
-            <div className="text-sm text-gray-600">Debug</div>
+            <div className="text-sm text-gray-600">{i18n('label-debug')}</div>
           </div>
           <div className="bg-blue-50 p-4 rounded-lg shadow border border-blue-200">
             <div className="text-2xl font-bold text-blue-700">{stats[LogLevel.INFO]}</div>
-            <div className="text-sm text-gray-600">Info</div>
+            <div className="text-sm text-gray-600">{i18n('label-info')}</div>
           </div>
           <div className="bg-yellow-50 p-4 rounded-lg shadow border border-yellow-200">
             <div className="text-2xl font-bold text-yellow-700">{stats[LogLevel.WARN]}</div>
-            <div className="text-sm text-gray-600">Warnings</div>
+            <div className="text-sm text-gray-600">{i18n('label-warnings')}</div>
           </div>
           <div className="bg-red-50 p-4 rounded-lg shadow border border-red-200">
             <div className="text-2xl font-bold text-red-700">{stats[LogLevel.ERROR]}</div>
-            <div className="text-sm text-gray-600">Errors</div>
+            <div className="text-sm text-gray-600">{i18n('label-errors')}</div>
           </div>
         </div>
 
@@ -177,17 +178,17 @@ export default class LogManagerPage extends Component<{}, LogManagerState> {
           <div className="flex flex-wrap gap-4 items-center">
             {/* Filter */}
             <div className="flex items-center gap-2">
-              <span className="text-sm font-medium text-gray-700">Filter:</span>
+              <span className="text-sm font-medium text-gray-700">{i18n('label-filter')}:</span>
               <select
                 value={filter}
                 onChange={(e) => this.handleFilterChange((e.target as HTMLSelectElement).value as LogLevel | 'all')}
                 className="px-3 py-1.5 text-sm border border-blue-300 rounded focus:outline-none focus:ring-2 focus:ring-blue-500 text-gray-900 bg-white"
               >
-                <option value="all">All Levels</option>
-                <option value={LogLevel.DEBUG}>Debug</option>
-                <option value={LogLevel.INFO}>Info</option>
-                <option value={LogLevel.WARN}>Warnings</option>
-                <option value={LogLevel.ERROR}>Errors</option>
+                <option value="all">{i18n('filter-all-levels')}</option>
+                <option value={LogLevel.DEBUG}>{i18n('filter-debug')}</option>
+                <option value={LogLevel.INFO}>{i18n('filter-info')}</option>
+                <option value={LogLevel.WARN}>{i18n('filter-warnings')}</option>
+                <option value={LogLevel.ERROR}>{i18n('filter-errors')}</option>
               </select>
             </div>
 
@@ -195,7 +196,7 @@ export default class LogManagerPage extends Component<{}, LogManagerState> {
             <div className="flex-1 min-w-[200px]">
               <input
                 type="text"
-                placeholder="Search logs..."
+                placeholder={i18n('placeholder-search-logs')}
                 value={searchQuery}
                 onInput={this.handleSearchChange}
                 className="w-full px-3 py-1.5 text-sm border border-blue-300 rounded focus:outline-none focus:ring-2 focus:ring-blue-500"
@@ -210,7 +211,7 @@ export default class LogManagerPage extends Component<{}, LogManagerState> {
                 onChange={this.handleAutoRefreshToggle}
                 className="w-4 h-4 text-blue-600 rounded focus:ring-2 focus:ring-blue-500"
               />
-              <span className="text-sm font-medium text-gray-700">Auto Refresh</span>
+              <span className="text-sm font-medium text-gray-700">{i18n('label-auto-refresh')}</span>
             </label>
 
             {/* Buttons */}
@@ -218,7 +219,7 @@ export default class LogManagerPage extends Component<{}, LogManagerState> {
               onClick={this.handleRefresh}
               className="px-4 py-1.5 text-sm bg-blue-500 text-white rounded hover:bg-blue-600 transition-colors font-medium"
             >
-              ↻ Refresh
+              ↻ {i18n('button-refresh')}
             </button>
 
             <button
@@ -226,14 +227,14 @@ export default class LogManagerPage extends Component<{}, LogManagerState> {
               disabled={isDownloading}
               className="px-4 py-1.5 text-sm bg-green-500 text-white rounded hover:bg-green-600 transition-colors font-medium disabled:bg-gray-400 disabled:cursor-not-allowed"
             >
-              {isDownloading ? '⟳ Downloading...' : '📦 Download Crash Report'}
+              {isDownloading ? `⟳ ${i18n('button-downloading')}` : `📦 ${i18n('button-download-crash-report')}`}
             </button>
 
             <button
               onClick={this.handleClearLogs}
               className="px-4 py-1.5 text-sm bg-red-500 text-white rounded hover:bg-red-600 transition-colors font-medium"
             >
-              🗑 Clear Logs
+              🗑 {i18n('button-clear-logs')}
             </button>
           </div>
 
@@ -241,7 +242,7 @@ export default class LogManagerPage extends Component<{}, LogManagerState> {
           {debugMethods.length > 0 && (
             <div className="mt-4 pt-4 border-t border-blue-100">
               <div className="text-sm text-gray-600">
-                <span className="font-medium">Registered Debug Methods ({debugMethods.length}):</span>
+                <span className="font-medium">{i18n('label-registered-debug-methods', { count: debugMethods.length.toString() })}:</span>
                 <span className="ml-2">{debugMethods.join(', ')}</span>
               </div>
             </div>
@@ -252,7 +253,7 @@ export default class LogManagerPage extends Component<{}, LogManagerState> {
         <div className="bg-white rounded-lg shadow border border-blue-100">
           <div className="p-4 border-b border-blue-100">
             <h2 className="text-lg font-semibold text-gray-800">
-              Logs ({filteredLogs.length})
+              {i18n('label-logs-count', { count: filteredLogs.length.toString() })}
             </h2>
           </div>
 
@@ -260,11 +261,11 @@ export default class LogManagerPage extends Component<{}, LogManagerState> {
             {filteredLogs.length === 0 ? (
               <div className="p-8 text-center text-gray-500">
                 <div className="text-4xl mb-2">📝</div>
-                <div className="text-lg font-medium">No logs found</div>
+                <div className="text-lg font-medium">{i18n('message-no-logs-found')}</div>
                 <div className="text-sm">
                   {searchQuery || filter !== 'all'
-                    ? 'Try adjusting your filters'
-                    : 'Logs will appear here as the application runs'}
+                    ? i18n('message-adjust-filters')
+                    : i18n('message-logs-will-appear')}
                 </div>
               </div>
             ) : (

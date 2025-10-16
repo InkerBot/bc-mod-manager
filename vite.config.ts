@@ -9,11 +9,14 @@ if(window.bmm){
 console.warn('BMM already initialized');
 }else{
 window.bmm={};
-window.bmm.shadowRoot=document.body.attachShadow({mode:'closed'});
+window.bmm.shadowRootContainer=document.createElement('div');
+window.bmm.shadowRootContainer.style='position:fixed;top:0;left:0;width:100vw;height:100vh;z-index:650;';
+window.bmm.shadowRoot=window.bmm.shadowRootContainer.attachShadow({mode: 'closed'});
 window.bmm.root=document.createElement('div');
-window.bmm.root.style="position:fixed;top:0;left:0;width:100vw;height:100vh;z-index:650;";
+window.bmm.root.style='position:fixed;top:0;left:0;width:100vw;height:100vh;';
 window.bmm.root.id='root';
 window.bmm.shadowRoot.appendChild(window.bmm.root);
+document.body.appendChild(window.bmm.shadowRootContainer);
 `;
 
 const styleContainer = `window.bmm.shadowRoot`
@@ -83,5 +86,11 @@ export default defineConfig({
   build: {
     modulePreload: false,
     sourcemap: 'hidden',
+    rolldownOptions: {
+      input: 'src/main.tsx',
+      output: {
+        entryFileNames: '[name].js',
+      },
+    }
   }
 })

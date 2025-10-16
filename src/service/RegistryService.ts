@@ -1,12 +1,18 @@
 import { LocalStorageService } from './LocalStorageService';
 
 /**
+ * Registry type options
+ */
+export type RegistryType = 'fusam' | 'aurora';
+
+/**
  * Registry interface
- * Represents a mod registry with a unique ID and URL
+ * Represents a mod registry with a unique ID, URL, and type
  */
 export interface Registry {
   id: string;
   url: string;
+  type: RegistryType;
   createdAt: number;
   updatedAt: number;
 }
@@ -26,8 +32,9 @@ export class RegistryService {
     let registries = LocalStorageService.getItem<Registry[]>(this.STORAGE_KEY);
     if (registries == null) {
       registries = [{
-        id: 'fusam',
+        id: this.generateId(),
         url: 'https://gitlab.com/Sidiousious/bc-addon-loader/-/raw/main/manifest.json',
+        type: 'fusam',
         createdAt: Date.now(),
         updatedAt: Date.now(),
       }]
@@ -49,9 +56,10 @@ export class RegistryService {
   /**
    * Add a new registry
    * @param url - The registry URL
+   * @param type - The registry type (default: 'fusam')
    * @returns The created registry or null if failed
    */
-  static add(url: string): Registry | null {
+  static add(url: string, type: RegistryType = 'fusam'): Registry | null {
     if (!this.isValidUrl(url)) {
       console.error('Invalid URL format');
       return null;
@@ -69,6 +77,7 @@ export class RegistryService {
     const newRegistry: Registry = {
       id: this.generateId(),
       url: url.trim(),
+      type: type,
       createdAt: now,
       updatedAt: now,
     };
@@ -82,9 +91,10 @@ export class RegistryService {
    * Update an existing registry
    * @param id - The registry ID
    * @param url - The new URL
+   * @param type - The registry type (optional)
    * @returns The updated registry or null if failed
    */
-  static update(id: string, url: string): Registry | null {
+  static update(id: string, url: string, type?: RegistryType): Registry | null {
     if (!this.isValidUrl(url)) {
       console.error('Invalid URL format');
       return null;
@@ -105,6 +115,9 @@ export class RegistryService {
     }
 
     registries[index].url = url.trim();
+    if (type !== undefined) {
+      registries[index].type = type;
+    }
     registries[index].updatedAt = Date.now();
 
     LocalStorageService.setItem(this.STORAGE_KEY, registries);

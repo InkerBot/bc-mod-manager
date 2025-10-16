@@ -15,7 +15,7 @@ window.bmm.shadowRoot=window.bmm.shadowRootContainer.attachShadow({mode: 'closed
 window.bmm.root=document.createElement('div');
 window.bmm.root.id='root';
 window.bmm.shadowRoot.appendChild(window.bmm.root);
-document.body.appendChild(window.bmm.shadowRootContainer);
+(document.body||document).appendChild(window.bmm.shadowRootContainer);
 `;
 
 const styleContainer = `window.bmm.shadowRoot`

@@ -9,7 +9,7 @@
 (function () {
   "use strict";
   const script = document.createElement("script");
-  script.src = `https://inkerbot.github.io/bc-mod-manager/main.js`;
+  script.src = `https://inkerbot.github.io/bc-mod-manager/main.js?v=${(Date.now() / 10000).toFixed(0)}`;
   script.async = true;
   script.crossOrigin = "anonymous";
   document.head.appendChild(script);

@@ -1,5 +1,3 @@
-import { LocalStorageService } from './LocalStorageService';
-
 /**
  * Log Level
  */
@@ -32,12 +30,12 @@ interface DebugMethod {
 
 /**
  * Log Service
- * Manages application logs and crash reporters
+ * Manages application logs and crash reporters (in-memory only)
  */
 export class LogService {
-  private static readonly STORAGE_KEY = 'bmm_logs';
   private static readonly MAX_LOGS = 1000; // Maximum number of logs to keep
-  private static debugMethods: Map<string, DebugMethod> = new Map();
+  private static logs: LogEntry[] = [];
+  private static debugMethods = new Map<string, DebugMethod>();
 
   /**
    * Register a debug method (crash reporter generator)
@@ -112,8 +110,6 @@ export class LogService {
    * @param data - Optional additional data
    */
   static log(level: LogLevel, message: string, data?: any): void {
-    const logs = this.getAllLogs();
-
     const entry: LogEntry = {
       id: `log_${Date.now()}_${Math.random().toString(36).substr(2, 9)}`,
       timestamp: Date.now(),
@@ -122,14 +118,12 @@ export class LogService {
       data,
     };
 
-    logs.push(entry);
+    this.logs.push(entry);
 
     // Keep only the last MAX_LOGS entries
-    if (logs.length > this.MAX_LOGS) {
-      logs.splice(0, logs.length - this.MAX_LOGS);
+    if (this.logs.length > this.MAX_LOGS) {
+      this.logs.splice(0, this.logs.length - this.MAX_LOGS);
     }
-
-    LocalStorageService.setItem(this.STORAGE_KEY, logs);
 
     // Also log to console
     const consoleMsg = `[${level}] ${message}`;
@@ -172,30 +166,28 @@ export class LogService {
    * Get all logs
    */
   static getAllLogs(): LogEntry[] {
-    const logs = LocalStorageService.getItem<LogEntry[]>(this.STORAGE_KEY);
-    return logs || [];
+    return [...this.logs]; // Return a copy to prevent external modification
   }
 
   /**
    * Get logs filtered by level
    */
   static getLogsByLevel(level: LogLevel): LogEntry[] {
-    return this.getAllLogs().filter(log => log.level === level);
+    return this.logs.filter(log => log.level === level);
   }
 
   /**
    * Get logs within a time range
    */
   static getLogsByTimeRange(startTime: number, endTime: number): LogEntry[] {
-    return this.getAllLogs().filter(log => log.timestamp >= startTime && log.timestamp <= endTime);
+    return this.logs.filter(log => log.timestamp >= startTime && log.timestamp <= endTime);
   }
 
   /**
    * Clear all logs
    */
   static clearLogs(): void {
-    LocalStorageService.setItem(this.STORAGE_KEY, []);
-    this.log(LogLevel.INFO, 'All logs cleared');
+    this.logs = [];
   }
 
   /**

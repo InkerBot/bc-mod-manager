@@ -1,4 +1,5 @@
 import {LogService} from "./service/LogService.ts";
+import {ModalService} from "./service/ModalService.ts";
 
 window.FUSAM = {
   present: true,
@@ -8,10 +9,10 @@ window.FUSAM = {
   },
   modals: {
     open: (options: ModalOptions) => {
-
+      ModalService.open(options);
     },
     openAsync: async (options: Omit<ModalOptions, "callback">) => {
-      return ["", ""];
+      return ModalService.openAsync(options);
     },
   },
 }

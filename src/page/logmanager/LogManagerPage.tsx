@@ -82,10 +82,9 @@ export default class LogManagerPage extends Component<{}, LogManagerState> {
     this.setState({ isDownloading: true });
     try {
       await LogService.downloadCrashReport();
-      alert('Crash report downloaded successfully!');
     } catch (error) {
       const errorMsg = error instanceof Error ? error.message : String(error);
-      alert(`Failed to download crash report: ${errorMsg}`);
+      console.error('Error downloading crash report:', errorMsg);
     } finally {
       this.setState({ isDownloading: false });
     }
@@ -269,7 +268,7 @@ export default class LogManagerPage extends Component<{}, LogManagerState> {
                 </div>
               </div>
             ) : (
-              filteredLogs.reverse().map((log) => (
+              [...filteredLogs].reverse().map((log) => (
                 <div key={log.id} className="p-4 hover:bg-blue-50 transition-colors">
                   <div className="flex items-start gap-3">
                     {/* Level Badge */}

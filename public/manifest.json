@@ -22,6 +22,25 @@
       ]
     },
     {
+      "id": "XiaoSuActivity",
+      "name": "动作拓展以及其他易用性功能",
+      "description": "Expansion on activity options",
+      "author": "XiaoSu",
+      "repository": "https://github.com/iceriny/XiaoSuActivity",
+      "tags": ["expansion"],
+      "type": "script",
+      "versions": [
+        {
+          "distribution": "stable",
+          "source": "https://iceriny.github.io/XiaoSuActivity/main/XSActivity.js"
+        },
+        {
+          "distribution": "beta",
+          "source": "https://iceriny.github.io/XiaoSuActivity/dev/XSActivity_dev.js"
+        }
+      ]
+    },
+    {
       "id": "Liko_Tool",
       "icon": "https://raw.githubusercontent.com/awdrrawd/liko-tool-Image-storage/refs/heads/main/Images/LOGO_2.png",
       "name": "Liko的工具包 —— Liko's Tool Kit",
@@ -227,63 +246,6 @@
         {
           "distribution": "stable",
           "source": "https://cdn.jsdelivr.net/gh/awdrrawd/liko-Plugin-Repository@main/Plugins/main/Liko%20-%20CDT.main.user.js"
-        }
-      ]
-    },
-    {
-      "id": "ECHO_cloth",
-      "icon": "https://raw.githubusercontent.com/awdrrawd/liko-tool-Image-storage/refs/heads/main/Images/LOGO_2.png",
-      "name": "ECHO的服裝拓展 —— ECHO's Expansion on cloth options",
-      "description": "ECHO的服裝拓展\nECHO's Expansion on cloth options",
-      "author": "莉柯莉絲(Likolisu)",
-      "repository": "https://github.com/awdrrawd/liko-Plugin-Repository",
-      "tags": [
-        "enhancements"
-      ],
-      "type": "module",
-      "noCacheBusting": true,
-      "versions": [
-        {
-          "distribution": "stable",
-          "source": "https://cdn.jsdelivr.net/gh/awdrrawd/liko-Plugin-Repository@main/"
-        }
-      ]
-    },
-    {
-      "id": "ECHO_activity",
-      "icon": "https://raw.githubusercontent.com/awdrrawd/liko-tool-Image-storage/refs/heads/main/Images/LOGO_2.png",
-      "name": "ECHO的動作拓展 —— ECHO's Expansion on activity options",
-      "description": "ECHO的動作拓展\nECHO's Expansion on activity options",
-      "author": "莉柯莉絲(Likolisu)",
-      "repository": "https://github.com/awdrrawd/liko-Plugin-Repository",
-      "tags": [
-        "enhancements"
-      ],
-      "type": "module",
-      "noCacheBusting": true,
-      "versions": [
-        {
-          "distribution": "stable",
-          "source": "https://cdn.jsdelivr.net/gh/awdrrawd/liko-Plugin-Repository@main/"
-        }
-      ]
-    },
-    {
-      "id": "XSActivity",
-      "icon": "https://raw.githubusercontent.com/awdrrawd/liko-tool-Image-storage/refs/heads/main/Images/LOGO_2.png",
-      "name": "小酥的動作拓展 —— Liko's Coordinate Drawing Tool",
-      "description": "小酥的動作拓展\nXS's Expansion on activity options",
-      "author": "莉柯莉絲(Likolisu)",
-      "repository": "https://github.com/awdrrawd/liko-Plugin-Repository",
-      "tags": [
-        "enhancements"
-      ],
-      "type": "module",
-      "noCacheBusting": true,
-      "versions": [
-        {
-          "distribution": "stable",
-          "source": "https://cdn.jsdelivr.net/gh/awdrrawd/liko-Plugin-Repository@main/"
         }
       ]
     },

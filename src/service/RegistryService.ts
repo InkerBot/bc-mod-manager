@@ -17,6 +17,7 @@ export interface Registry {
   type: RegistryType;
   createdAt: number;
   updatedAt: number;
+  isPreset?: boolean;
 }
 
 /**
@@ -27,26 +28,40 @@ export class RegistryService {
   private static readonly STORAGE_KEY = 'bmm_registries';
 
   /**
+   * Preset registry URLs that cannot be deleted or modified
+   */
+  private static readonly PRESET_REGISTRIES: Registry[] = [
+    {
+      id: 'sidiousious',
+      url: 'https://sidiousious.gitlab.io/bc-addon-loader/manifest.json',
+      type: 'fusam',
+      createdAt: Date.parse('2025-10-16T00:00:00Z'),
+      updatedAt: Date.parse('2025-10-16T00:00:00Z'),
+      isPreset: true,
+    },
+    {
+      id: 'inkerbot',
+      url: 'https://inkerbot.github.io/bc-mod-manager/manifest.json',
+      type: 'fusam',
+      createdAt: Date.parse('2025-10-16T00:00:00Z'),
+      updatedAt: Date.parse('2025-10-16T00:00:00Z'),
+      isPreset: true,
+    },
+  ];
+
+
+  static getAll(): Registry[] {
+    return [...this.PRESET_REGISTRIES, ...this.getAllUser()];
+  }
+
+  /**
    * Get all registries
    * @returns Array of all registries
    */
-  static getAll(): Registry[] {
+  static getAllUser(): Registry[] {
     let registries = LocalStorageService.getItem<Registry[]>(this.STORAGE_KEY);
     if (registries == null) {
-      registries = [{
-        id: this.generateId(),
-        url: 'https://sidiousious.gitlab.io/bc-addon-loader/manifest.json',
-        type: 'fusam',
-        createdAt: Date.now(),
-        updatedAt: Date.now(),
-      }]
-      registries = [{
-        id: this.generateId(),
-        url: 'https://inkerbot.github.io/bc-mod-manager/manifest.json',
-        type: 'fusam',
-        createdAt: Date.now(),
-        updatedAt: Date.now(),
-      }]
+      registries = []
       LocalStorageService.setItem(this.STORAGE_KEY, registries);
     }
     return registries;
@@ -74,7 +89,7 @@ export class RegistryService {
       return null;
     }
 
-    const registries = this.getAll();
+    const registries = this.getAllUser();
 
     // Check for duplicate URLs
     if (registries.some(r => r.url === url)) {
@@ -113,7 +128,7 @@ export class RegistryService {
       return null;
     }
 
-    const registries = this.getAll();
+    const registries = this.getAllUser();
     const index = registries.findIndex(r => r.id === id);
 
     if (index === -1) {
@@ -149,7 +164,7 @@ export class RegistryService {
    * @returns true if successful, false otherwise
    */
   static delete(id: string): boolean {
-    const registries = this.getAll();
+    const registries = this.getAllUser();
     const filteredRegistries = registries.filter(r => r.id !== id);
 
     if (filteredRegistries.length === registries.length) {

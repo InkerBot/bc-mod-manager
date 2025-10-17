@@ -73,6 +73,21 @@
       ]
     },
     {
+      "id": "BC OKLCH picker",
+      "name": "BC 颜色选择器 - OKLCH",
+      "description": "一个支持 OKLCH 的颜色选择器，用于增强 BC 原有颜色选择器",
+      "author": "Razor",
+      "repository": "https://github.com/InkerBot/bc-oklch-picker",
+      "tags": ["enhancements"],
+      "type": "script",
+      "versions": [
+        {
+          "distribution": "stable",
+          "source": "https://inkerbot.github.io/bc-oklch-picker/main.js"
+        }
+      ]
+    },
+    {
       "id": "Bondage-Club-Chaos",
       "name": "Bondage Club Chaos (BCC)",
       "description": " bondage-club-chaos",

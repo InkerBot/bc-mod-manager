@@ -79,7 +79,7 @@
       "author": "Razor",
       "repository": "https://github.com/InkerBot/bc-oklch-picker",
       "tags": ["enhancements"],
-      "type": "script",
+      "type": "module",
       "versions": [
         {
           "distribution": "stable",

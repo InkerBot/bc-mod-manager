@@ -9,15 +9,17 @@ if(window.bmm){
 console.warn('BMM already initialized');
 }else{
 window.bmm={};
+window.bmm.shadowRootContainer=document.createElement('div');
+window.bmm.shadowRootContainer.style='position:fixed;z-index:650;';
+window.bmm.shadowRoot=window.bmm.shadowRootContainer.attachShadow({mode: 'closed'});
 window.bmm.root=document.createElement('div');
 window.bmm.root.id='root';
-if(document.body){
-window.bmm.shadowRoot=document.body.attachShadow({mode: 'closed'});
 window.bmm.shadowRoot.appendChild(window.bmm.root);
+if(document.body){
+document.body.appendChild(window.bmm.shadowRootContainer);
 }else{
 document.addEventListener('DOMContentLoaded', function() {
-window.bmm.shadowRoot=document.body.attachShadow({mode: 'closed'});
-window.bmm.shadowRoot.appendChild(window.bmm.root);
+document.body.appendChild(window.bmm.shadowRootContainer);
 });
 }
 `;

@@ -49,7 +49,7 @@ export class ModLoaderService {
     const modsWithDetails = ModService.getAllModsWithDetails();
     const enabledMods = modsWithDetails.filter(mod => mod.enabled && mod.type == 'module');
     enabledMods.forEach(mod => {
-      this.preloadMod(mod.modId, mod.registryId, mod.sourceUrl, mod.name, mod.selectedVersion);
+      this.preloadMod(mod.modId, mod.type, mod.registryId, mod.sourceUrl, mod.name, mod.selectedVersion);
     });
     LogService.info(`ModLoaderService: Preloaded ${enabledMods.length} enabled mods`);
   }
@@ -147,7 +147,7 @@ export class ModLoaderService {
     }
   }
 
-  static preloadMod(modId: string, registryId: string, sourceUrl: string | undefined, modName: string, distribution: string = 'unknown'): void {
+  static preloadMod(modId: string, type: string | undefined, registryId: string, sourceUrl: string | undefined, modName: string, distribution: string = 'unknown'): void {
     const modKey = `${modId}_${registryId}`;
 
     // Skip if already loaded
@@ -165,7 +165,16 @@ export class ModLoaderService {
     try {
       LogService.info(`ModLoaderService: Preloading mod ${modName} from ${sourceUrl}`);
       const link = document.createElement('link');
-      link.rel = 'preload';
+      switch (type) {
+        case 'module':
+          link.rel = 'modulepreload';
+          break;
+        case 'script':
+        default:
+          link.rel = 'preload';
+          link.as = 'script';
+          break;
+      }
       link.href = sourceUrl;
       link.setAttribute('data-mod-id', modId);
       link.setAttribute('data-registry-id', registryId);

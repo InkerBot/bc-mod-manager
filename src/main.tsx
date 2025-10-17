@@ -12,7 +12,7 @@ import {ModLoaderService} from "./service/ModLoaderService.ts";
 LogService.info('BC Mod Manager started');
 
 // fetch all registries and cache data
-RegistryDataService.fetchAllRegistries(RegistryService.getAllUser())
+RegistryDataService.fetchAllRegistries(RegistryService.getAll())
   .then(() => {
     LogService.info('Registry data fetched and cached');
   })

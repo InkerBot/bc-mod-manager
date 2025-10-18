@@ -51,30 +51,6 @@ export class ModalService {
   }
 
   /**
-   * Open a modal with promise-based API
-   * @param options - Modal configuration options (without callback)
-   * @returns Promise that resolves with [action, inputValue]
-   */
-  static openAsync(
-    options: Omit<ModalOptions, "callback">
-  ): Promise<[string, string | null]> {
-    return new Promise((resolve) => {
-      const modal: ModalState = {
-        id: this.generateId(),
-        prompt: options.prompt,
-        input: options.input,
-        callback: (action: string, inputValue?: string) => {
-          resolve([action, inputValue ?? null]);
-        },
-        buttons: options.buttons,
-      };
-
-      this.modals.push(modal);
-      this.notify();
-    });
-  }
-
-  /**
    * Close a specific modal by ID
    * @param id - Modal ID to close
    */

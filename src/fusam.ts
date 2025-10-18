@@ -12,7 +12,14 @@ window.FUSAM = {
       ModalService.open(options);
     },
     openAsync: async (options: Omit<ModalOptions, "callback">) => {
-      return ModalService.openAsync(options);
+      return new Promise((resolve) => {
+        ModalService.open({
+          ...options,
+          callback: (action, inputValue) => {
+            resolve([action, inputValue === undefined ? null : inputValue]);
+          },
+        });
+      });
     },
   },
 }

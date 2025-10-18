@@ -47,6 +47,14 @@ export class RegistryService {
       updatedAt: Date.parse('2025-10-16T00:00:00Z'),
       isPreset: true,
     },
+    {
+      id: 'awdrrawd',
+      url: 'https://cdn.jsdelivr.net/gh/awdrrawd/liko-Plugin-Repository@main/manifest.json',
+      type: 'fusam',
+      createdAt: Date.parse('2025-10-18T00:00:00Z'),
+      updatedAt: Date.parse('2025-10-18T00:00:00Z'),
+      isPreset: true,
+    },
   ];
 
 

@@ -97,5 +97,8 @@ export default defineConfig({
         entryFileNames: '[name].js',
       },
     }
+  },
+  server: {
+    cors: true,
   }
 })

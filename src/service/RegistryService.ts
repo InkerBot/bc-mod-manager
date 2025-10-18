@@ -49,7 +49,7 @@ export class RegistryService {
     },
     {
       id: 'awdrrawd',
-      url: 'https://cdn.jsdelivr.net/gh/awdrrawd/liko-Plugin-Repository@main/manifest.json',
+      url: 'https://awdrrawd.github.io/liko-Plugin-Repository/manifest.json',
       type: 'fusam',
       createdAt: Date.parse('2025-10-18T00:00:00Z'),
       updatedAt: Date.parse('2025-10-18T00:00:00Z'),

@@ -55,7 +55,7 @@ export default class ModalDialog extends Component<ModalDialogProps, ModalDialog
         <div className="bg-white rounded-lg shadow-2xl max-w-md w-full p-6">
           <button
             onClick={() => this.handleAction("close")}
-            className="sticky top-4 float-right mr-4 mt-4 w-10 h-10 bg-red-500 text-white rounded-full hover:bg-red-600 transition-colors z-50 flex items-center justify-center text-2xl font-bold"
+            className="sticky top-4 float-right -mr-4 -mt-4 w-10 h-10 bg-red-500 text-white rounded-full hover:bg-red-600 transition-colors z-50 flex items-center justify-center text-2xl font-bold"
             title={i18n('button-close')}
           >
             ×

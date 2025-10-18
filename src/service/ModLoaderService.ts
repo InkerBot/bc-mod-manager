@@ -9,6 +9,7 @@ export class ModLoaderService {
   private static loadedMods: Set<string> = new Set();
   private static initialEnabledMods: Set<string> = new Set();
   private static hasDisabledMods: boolean = false;
+  private static scheduledPreload: number | null = null;
   private static scheduledLoad: number | null = null;
 
   /**
@@ -41,11 +42,25 @@ export class ModLoaderService {
           this.scheduledLoad = null;
           this.loadAllEnabledModsImpl();
         }
-      }, 50);
+      }, 5);
     }
   }
 
   static preloadAllEnabledMods(): void {
+    if (document.head !== null) {
+      this.preloadAllEnabledModsImpl();
+    } else if (!this.scheduledPreload) {
+      this.scheduledPreload = setInterval(() => {
+        if (document.head !== null) {
+          clearInterval(this.scheduledPreload!);
+          this.scheduledPreload = null;
+          this.preloadAllEnabledModsImpl();
+        }
+      }, 5);
+    }
+  }
+
+  private static preloadAllEnabledModsImpl(): void {
     const modsWithDetails = ModService.getAllModsWithDetails();
     const enabledMods = modsWithDetails.filter(mod => mod.enabled && mod.type == 'module');
     enabledMods.forEach(mod => {

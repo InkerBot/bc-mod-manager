@@ -12,5 +12,5 @@
   script.src = `https://inkerbot.github.io/bc-mod-manager/main.js?v=${(Date.now() / 10000).toFixed(0)}`;
   script.async = true;
   script.crossOrigin = "anonymous";
-  document.head.appendChild(script);
+  (document.head || document.documentElement).appendChild(script);
 })();

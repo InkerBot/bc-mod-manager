@@ -4,7 +4,7 @@
     {
       "id": "HardCroeClub",
       "name": "HardCroeClub BCX",
-      "description": "THIS IS A FORK OF BCX - USE ONLY IF YOU KNOW WHAT YOU”RE DOING I RECOMMEND YOU TO USE OFFICIAL BCX",
+      "description": "THIS IS A FORK OF BCX - USE ONLY IF YOU KNOW WHAT YOU'RE DOING I RECOMMEND YOU TO USE OFFICIAL BCX\nBCX严格版，建议安装官方版，除非你知道你在做什么",
       "author": "rufflan",
       "repository": "https://github.com/rufflan/HardCroeClub",
       "tags": ["enhancements", "expansion"],

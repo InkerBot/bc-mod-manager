@@ -73,6 +73,21 @@
       ]
     },
     {
+      "id": "BC Color Correction",
+      "name": "BC 颜色校正器",
+      "description": "将调色板颜色转换为更准确的颜色值",
+      "author": "Koephi",
+      "repository": "https://github.com/phinyxdayo/bc-color-picker-plus",
+      "tags": ["enhancements"],
+      "type": "script",
+      "versions": [
+        {
+          "distribution": "stable",
+          "source": "https://cdn.jsdelivr.net/gh/phinyxdayo/bc-color-picker-plus@main/BC%20Color%20Correction.user.js"
+        }
+      ]
+    },
+    {
       "id": "BC OKLCH picker",
       "name": "BC 颜色选择器 - OKLCH",
       "description": "一个支持 OKLCH 的颜色选择器，用于增强 BC 原有颜色选择器",

@@ -16,6 +16,10 @@ setInterval(() => {
   }
 }, 5000);
 
+export function currentLanguage(): string {
+  return lastLanguage || 'EN';
+}
+
 export default function i18n(key: string, variables?: Record<string, string | number>): string {
   let translation = registry[lastLanguage || 'EN']?.[key];
   if (typeof translation !== 'string') {

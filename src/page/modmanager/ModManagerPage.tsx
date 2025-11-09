@@ -1,7 +1,7 @@
 import {Component} from "preact";
 import {type ModConfig, ModService} from "../../service/ModService";
 import {type FusamAddon} from "../../service/RegistryDataService";
-import i18n from "../../i18n/i18n.ts";
+import i18n, {currentLanguage} from "../../i18n/i18n.ts";
 import CustomExtensionModal from "../../component/CustomExtensionModal";
 
 interface ModManagerState {
@@ -147,7 +147,9 @@ export default class ModManagerPage extends Component<{}, ModManagerState> {
     if (searchQuery.trim()) {
       const query = searchQuery.toLowerCase();
       filtered = filtered.filter(m =>
-        m.addon.name.toLowerCase().includes(query) ||
+        (typeof m.addon.name == 'string'
+          ? m.addon.name.toLowerCase().includes(query)
+          : m.addon.name['en']?.includes(query) ) ||
         m.addon.description.toLowerCase().includes(query) ||
         m.addon.author.toLowerCase().includes(query) ||
         m.addon.id.toLowerCase().includes(query) ||
@@ -243,6 +245,9 @@ export default class ModManagerPage extends Component<{}, ModManagerState> {
               {filteredMods.map((mod) => {
                 const isEnabled = mod.config?.enabled || false;
                 const uniqueId = `${mod.addon.id}_${mod.registryId}`;
+                const modName = typeof mod.addon.name === 'string'
+                  ? mod.addon.name
+                  : (mod.addon.name[currentLanguage().toLowerCase()] || mod.addon.name['en'] || 'Unknown Mod');
 
                 // Get selected version: from config if installed, from pendingVersions if not, or default
                 const selectedVersion = isEnabled
@@ -259,7 +264,7 @@ export default class ModManagerPage extends Component<{}, ModManagerState> {
                       {mod.addon.icon && (
                         <img
                           src={mod.addon.icon}
-                          alt={mod.addon.name}
+                          alt={modName}
                           className="w-12 h-12 rounded object-cover flex-shrink-0"
                           onError={(e) => {
                             (e.target as HTMLImageElement).style.display = 'none';
@@ -271,7 +276,7 @@ export default class ModManagerPage extends Component<{}, ModManagerState> {
                       <div className="flex-1 min-w-0">
                         {/* Title Row */}
                         <div className="flex items-center gap-2 mb-1">
-                          <h3 className="text-lg font-semibold text-blue-700">{mod.addon.name}</h3>
+                          <h3 className="text-lg font-semibold text-blue-700">{modName}</h3>
                           {mod.addon.tags && mod.addon.tags.length > 0 && (
                             <div className="flex gap-1 flex-wrap">
                               {mod.addon.tags.slice(0, 3).map(tag => (

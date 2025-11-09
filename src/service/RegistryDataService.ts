@@ -7,7 +7,7 @@ import {LogService} from "./LogService.ts";
  */
 export interface FusamAddon {
   id: string;
-  name: string;
+  name: string | Record<string, string>;
   description: string;
   author: string;
   repository?: string;

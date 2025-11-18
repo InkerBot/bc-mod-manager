@@ -19,6 +19,22 @@
       ]
     },
     {
+      "id": "Vivians-Portable-Wardrobe",
+      "name": "Vivian's Portable Wardrobe for Bondage Club / Vivian 的 BC 随身衣柜X",
+      "description": "A BC script that adds a portable wardrobe system with a preview mirror and advanced outfit management.\n本脚本为 BC 游戏提供 随身衣柜，内置预览镜和高级服装管理功能。",
+      "author": "VivianMoonlight",
+      "repository": "https://github.com/VivianMoonlight/Vivians-Portable-Wardrobe",
+      "tags": ["enhancements"],
+      "type": "module",
+      "website": "https://github.com/VivianMoonlight/Vivians-Portable-Wardrobe",
+      "versions": [
+        {
+          "distribution": "stable",
+          "source": "https://vivianmoonlight.github.io/Vivians-Portable-Wardrobe/PortableWardrobe/init.js"
+        }
+      ]
+    },
+    {
       "id": "RazorWings",
       "name": "RazorWings (RW)",
       "description": "Razor Wings 提供了一系列类似作弊的功能，用于辅助PR、设计服装等。同时也提供了与IRL玩具的互动。",

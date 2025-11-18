@@ -58,6 +58,21 @@
       ]
     },
     {
+      "id": "XiaoSuActivity Razor",
+      "name": "动作拓展以及其他易用性功能 （Razor分支）",
+      "description": "Expansion on activity options (Razor fork) 相比于原项目，修复了R122无法使用的问题",
+      "author": "XiaoSu, Razor",
+      "repository": "https://github.com/InkerBot/XiaoSuActivity",
+      "tags": ["expansion"],
+      "type": "script",
+      "versions": [
+        {
+          "distribution": "stable",
+          "source": "https://inkerbot.github.io/XiaoSuActivity/XSActivity.js"
+        }
+      ]
+    },
+    {
       "id": "BC Color picker plus",
       "name": "BC 颜色选择器 Plus",
       "description": "悬浮按钮和弹窗都可以拖动",

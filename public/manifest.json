@@ -91,7 +91,7 @@
     {
       "id": "BC Color picker plus",
       "name": "BC 颜色选择器 Plus",
-      "description": "悬浮按钮和弹窗都可以拖动",
+      "description": "实时预览的HSV/HSL颜色选择器。悬浮按钮和弹窗都可以拖动。",
       "author": "Koephi",
       "repository": "https://github.com/phinyxdayo/bc-color-picker-plus",
       "tags": ["enhancements"],
@@ -99,14 +99,14 @@
       "versions": [
         {
           "distribution": "stable",
-          "source": "https://cdn.jsdelivr.net/gh/phinyxdayo/bc-color-picker-plus@main/Koephi%20-%20Color%20Picker.js"
+          "source": "https://github.com/phinyxdayo/bc-color-picker-plus/raw/refs/heads/main/Koephi%20-%20Color%20Picker.user.js"
         }
       ]
     },
     {
       "id": "BC Color Correction",
       "name": "BC 颜色校正器",
-      "description": "将调色板颜色转换为更准确的颜色值",
+      "description": "支援自动与手动调整，使物品的实际显示颜色与目标HEX一致。",
       "author": "Koephi",
       "repository": "https://github.com/phinyxdayo/bc-color-picker-plus",
       "tags": ["enhancements"],
@@ -114,7 +114,7 @@
       "versions": [
         {
           "distribution": "stable",
-          "source": "https://cdn.jsdelivr.net/gh/phinyxdayo/bc-color-picker-plus@main/BC%20Color%20Correction.user.js"
+          "source": "https://github.com/phinyxdayo/bc-color-picker-plus/raw/refs/heads/main/Koephi%20-%20Color%20Correction.user.js"
         }
       ]
     },

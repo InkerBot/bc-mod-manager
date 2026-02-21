@@ -99,7 +99,7 @@
       "versions": [
         {
           "distribution": "stable",
-          "source": "https://github.com/phinyxdayo/bc-color-picker-plus/raw/refs/heads/main/Koephi%20-%20Color%20Picker.user.js"
+          "source": "https://cdn.jsdelivr.net/gh/phinyxdayo/bc-color-picker-plus@main/Koephi%20-%20Color%20Picker.user.js"
         }
       ]
     },
@@ -114,7 +114,7 @@
       "versions": [
         {
           "distribution": "stable",
-          "source": "https://github.com/phinyxdayo/bc-color-picker-plus/raw/refs/heads/main/Koephi%20-%20Color%20Correction.user.js"
+          "source": "https://cdn.jsdelivr.net/gh/phinyxdayo/bc-color-picker-plus@main/Koephi%20-%20Color%20Correction.user.js"
         }
       ]
     },

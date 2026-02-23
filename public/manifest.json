@@ -134,6 +134,21 @@
       ]
     },
     {
+      "id": "BC Craft Tooltip Fix",
+      "name": "BC 制作工具提示修复",
+      "description": "修复 BC CreateCraftTooltipContent 导致的严重 bug，补丁会在 Effects 缺失时自动补全空对象。",
+      "author": "InkerBot",
+      "repository": "https://github.com/InkerBot/bc-mod-manager",
+      "tags": ["enhancements"],
+      "type": "script",
+      "versions": [
+        {
+          "distribution": "stable",
+          "source": "https://inkerbot.github.io/bc-mod-manager/bc-craft-tooltip-fix.user.js"
+        }
+      ]
+    },
+    {
       "id": "Bondage-Club-Chaos",
       "name": "Bondage Club Chaos (BCC)",
       "description": " bondage-club-chaos",

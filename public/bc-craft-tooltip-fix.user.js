@@ -12,7 +12,7 @@
   const timer = setInterval(() => {
     if (typeof ElementButton !== "undefined" && ElementButton.CreateCraftTooltipContent) {
       clearInterval(timer);
-      (_=>{const b=ElementButton.CreateCraftTooltipContent;ElementButton.CreateCraftTooltipContent=e=>(e.Effects??={},b(e))})()
+      (_=>{const b=ElementButton.CreateCraftTooltipContent;ElementButton.CreateCraftTooltipContent=e=>(e.Effects??={},b(e))})();
     }
   }, 500);
 })();
